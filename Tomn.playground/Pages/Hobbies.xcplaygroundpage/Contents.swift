@@ -20,21 +20,29 @@ var gravityBehavior: UIGravityBehavior?
 func addDynamics() {
     animator.removeAllBehaviors()
     
+    /* All views collide */
     let collisionBehavior = UICollisionBehavior(items: view.subviews)
     collisionBehavior.translatesReferenceBoundsIntoBoundary = true
     animator.addBehavior(collisionBehavior)
     
+    /* All views have inertia and “push back” after collisions */
     let elasticityBehavior = UIDynamicItemBehavior(items: view.subviews)
     elasticityBehavior.elasticity = 0.7
     elasticityBehavior.friction = 1.0
     animator.addBehavior(elasticityBehavior)
     
+    /* Organize view with gravity, and let them fall at first */
     gravityBehavior = UIGravityBehavior(items: view.subviews)
     gravityBehavior!.magnitude = 5
     animator.addBehavior(gravityBehavior!)
 }
 
 
+/// Adds a lot more views to the scene
+///
+/// - Parameters:
+///   - number: Number of views to add
+///   - ballSize: Size of the views
 func ballParty(with number: Int, size ballSize: CGSize) {
     
     for _ in 0..<number {
@@ -102,7 +110,7 @@ tennisBall2.frame = CGRect(origin: CGPoint(x: 342, y: 142), size: ballSize)
 view.addSubview(tennisBall2)
 //#-editable-code
 
-//: Make it pop
+//: Make it pop 😏🎾💥
 //#-editable-code
 //#-code-completion(everything, hide)
 //#-code-completion(identifier, show, ballParty(with: 30, size: ballSize))
@@ -110,6 +118,7 @@ view.addSubview(tennisBall2)
 //ballParty(with: 30, size: ballSize)
 /*#-end-editable-code*/
 
+//: ## Add some gravity at first, then inertia, collisions…
 addDynamics()
 
 //#-hidden-code
