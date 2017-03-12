@@ -3,6 +3,7 @@
 //#-hidden-code
 import UIKit
 import PlaygroundSupport
+import AVFoundation
 
 /// Main view
 let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
@@ -10,6 +11,11 @@ let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
 //#-end-hidden-code
 let imageShapeType: UIDynamicItemCollisionBoundsType = /*#-editable-code Select a picture shape*/.ellipse/*#-end-editable-code*/
 //#-hidden-code
+
+/// URL to sound file played when the view is tapped
+let serveSound = URL(fileURLWithPath: Bundle.main.path(forResource: "service", ofType: "mp3")!)
+/// Sound player
+let audioPlayer = try AVAudioPlayer(contentsOf: serveSound)
 
 /// Handles physics-related animations
 let animator = UIDynamicAnimator(referenceView: view)
@@ -89,6 +95,8 @@ class BouncingImageView: UIImageView {
         pusher.pushDirection = CGVector(dx: 20, dy: 10)
         pusher.active = true
         animator.addBehavior(pusher)
+        
+        audioPlayer.play()
     }
 }
 //#-end-hidden-code
@@ -120,6 +128,9 @@ view.addSubview(tennisBall2)
 
 //: ## Add some gravity at first, then inertia, collisions…
 addDynamics()
+
+//: ## Load sound
+audioPlayer.prepareToPlay()
 
 //#-hidden-code
 
