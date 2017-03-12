@@ -58,7 +58,7 @@ class RotatingResponder: UIView {
                 animation.toValue = CGFloat.pi * speedRange
                 animation.duration = 5
                 animation.timingFunction = CAMediaTimingFunction(controlPoints: 0, 0, 0.2, 1)
-                animation.fillMode = kCAFillModeForwards
+                animation.fillMode = kCAFillModeBoth
                 animation.isRemovedOnCompletion = false
                 animation.isCumulative = true
                 avatarView.layer.add(animation, forKey: "animateRotation")
