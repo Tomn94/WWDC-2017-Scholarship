@@ -549,6 +549,9 @@ let frameSize = CGSize(width: 500, height: 500)
 let scene = GameScene(size: frameSize)
 scene.scaleMode = .aspectFill
 let view = SKView(frame: CGRect(origin: CGPoint.zero, size: frameSize))
+view.showsFPS = false
+view.showsNodeCount = false
+view.ignoresSiblingOrder = true
 view.presentScene(scene)
 PlaygroundPage.current.liveView = view
 //#-end-hidden-code
