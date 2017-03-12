@@ -5,8 +5,13 @@ import MapKit
 import PlaygroundSupport
 //#-end-hidden-code
 
+/// Define the size of the flags
 let pinSize:             CGFloat = /*#-editable-code Define the size of the flags*/42/*#-end-editable-code*/
+
+/// Enter a number of seconds after which the map animation starts
 let animationDelay: TimeInterval = /*#-editable-code Enter a number of seconds after which the map animation starts*/2/*#-end-editable-code*/
+
+/// Enter a plane speed multiplier
 let planeSpeed:     TimeInterval = /*#-editable-code Enter a plane speed multiplier*/1/*#-end-editable-code*/
 
 //#-hidden-code
@@ -162,7 +167,7 @@ let plane = Annotation(at: CLLocationCoordinate2D(latitude: angers.coordinate.la
 /// Intermediate middle point
 let center = CLLocationCoordinate2D(latitude: 37.758818, longitude: 64.346717)
 
-//: ## Create the map
+//: ## Create the map (main view)
 /// Strong reference to the map view delegate
 let delegate = MapDelegate()
 let map = MKMapView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
