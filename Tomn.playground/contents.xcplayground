@@ -3,5 +3,6 @@
     <pages>
         <page name='Me'/>
         <page name='Travel'/>
+        <page name='Hobbies'/>
     </pages>
 </playground>
