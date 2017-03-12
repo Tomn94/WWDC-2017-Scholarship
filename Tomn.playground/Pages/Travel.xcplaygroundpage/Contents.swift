@@ -154,7 +154,8 @@ let japan = Annotation(at: CLLocationCoordinate2D(latitude: 35.6895, longitude: 
 let cities = [angers, hongkong, macao, uk, ireland, germany, china, morocco, czech, belgium, italy, luxembourg, greece, spain, vietnam, myanmar, thailand, cambodia, japan]
 
 /// This pin is me
-let plane = Annotation(at: angers.coordinate,
+let plane = Annotation(at: CLLocationCoordinate2D(latitude: angers.coordinate.latitude - 0.4,
+                                                  longitude: angers.coordinate.longitude + 0.8),
                        title: "Me 👨🏼‍💻", subtitle: nil,
                        pin: "🛩")
 
@@ -199,20 +200,20 @@ Timer.scheduledTimer(withTimeInterval: animationDelay + 3, repeats: false) { _ i
 //: ### Move the plane to its final destination, Hong Kong
 Timer.scheduledTimer(withTimeInterval: animationDelay + 3, repeats: false) { _ in
     UIView.animate(withDuration: 3 / planeSpeed) {
-        plane.coordinate = hongkong.coordinate
+        plane.coordinate = CLLocationCoordinate2D(latitude: hongkong.coordinate.latitude + 0.01,
+                                                  longitude: hongkong.coordinate.longitude - 0.03)
     }
 }
 
 //: ### Zoom further on Hong Kong
-Timer.scheduledTimer(withTimeInterval: animationDelay + 5, repeats: false) { _ in
+Timer.scheduledTimer(withTimeInterval: animationDelay + 4.8, repeats: false) { _ in
     map.setRegion(MKCoordinateRegionMake(hongkong.coordinate,
                                          MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3)), animated: true)
 }
 
 //: ### Unzoom to global scale
 Timer.scheduledTimer(withTimeInterval: animationDelay + 9, repeats: false) { _ in
-    map.setRegion(MKCoordinateRegionMake(center,
-                                         MKCoordinateSpan(latitudeDelta: 120, longitudeDelta: 120)), animated: true)
+    map.showAnnotations(cities, animated: true)
 }
 //#-end-hidden-code
 
