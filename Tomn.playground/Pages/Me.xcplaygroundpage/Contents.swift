@@ -18,7 +18,7 @@ let avatarBorderSize: CGFloat = /*#-editable-code Edit the avatar border size*/1
 let backgroundColors = [/*#-editable-code Choose the gradient colors of the background*/#colorLiteral(red: 1, green: 0.2039215686, blue: 0.1921568627, alpha: 1).cgColor, #colorLiteral(red: 1, green: 0.7411764706, blue: 0.2549019608, alpha: 1).cgColor, #colorLiteral(red: 0.5607843137, green: 0.7960784314, blue: 0.2470588235, alpha: 1).cgColor, #colorLiteral(red: 0, green: 0.8980392157, blue: 1, alpha: 1).cgColor, #colorLiteral(red: 0.1960784314, green: 0.4666666667, blue: 1, alpha: 1).cgColor, #colorLiteral(red: 0.9843137255, green: 0.4039215686, blue: 1, alpha: 1).cgColor, #colorLiteral(red: 1, green: 0.2039215686, blue: 0.1921568627, alpha: 1).cgColor/*#-end-editable-code*/]
 
 /// Accelerate the color rotation
-let backgroundAnimationSpeed: CFTimeInterval = /*#-editable-code */1/*#-end-editable-code*/
+let backgroundAnimationSpeed: CFTimeInterval = /*#-editable-code */20/*#-end-editable-code*/
 
 /// Adjust the rotating speed of the avatar after releasing your finger
 let rotatingInertiaFactor: CGFloat = /*#-editable-code Adjust the rotating speed of the avatar after releasing your finger*/1/*#-end-editable-code*/
@@ -93,7 +93,7 @@ animation.fromValue = CGPoint.zero
 animation.toValue = CGPoint(x: -gradientSize.width  + backgroundSize.width,
                             y: -gradientSize.height + backgroundSize.height)
 animation.repeatCount = Float.greatestFiniteMagnitude
-animation.duration = 30 * backgroundAnimationSpeed
+animation.duration = backgroundAnimationSpeed
 animation.autoreverses = true
 animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
 background.layer.add(animation, forKey: "animateGradient")
@@ -185,22 +185,23 @@ let title = UILabel()
 title.text = "Thomas Naudet"
 title.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 title.textAlignment = .center
-title.font = UIFont.boldSystemFont(ofSize: 35.3)
+title.font = UIFont.boldSystemFont(ofSize: 40)
 title.layer.opacity = 0.8
 
 //: ## Add subtitle
 let subtitle = UILabel()
-subtitle.text = "Student 👨🏼‍🎓 iOS Developer"
+subtitle.text = "Engineering Student 👨🏼‍🎓\nApple & Web Developer"
 subtitle.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 subtitle.textAlignment = .center
+subtitle.numberOfLines = 2
 subtitle.font = UIFont.systemFont(ofSize: 22)
-subtitle.layer.opacity = 0.7
+subtitle.layer.opacity = 0.75
 
 /// Main layout
 let verticalStack = UIStackView(arrangedSubviews: [avatarView, title, subtitle])
 verticalStack.axis = .vertical
 verticalStack.alignment = .center
-verticalStack.spacing = 6
+verticalStack.spacing = 15
 verticalStack.translatesAutoresizingMaskIntoConstraints = false
 
 view.addSubview(verticalStack)
@@ -216,7 +217,7 @@ view.addConstraints([NSLayoutConstraint(item: verticalStack,
                                         relatedBy: .equal,
                                         toItem: view,
                                         attribute: .height,
-                                        multiplier: 0.6,
+                                        multiplier: 0.7,
                                         constant: 0),
                      NSLayoutConstraint(item: verticalStack,
                                         attribute: .centerY,
