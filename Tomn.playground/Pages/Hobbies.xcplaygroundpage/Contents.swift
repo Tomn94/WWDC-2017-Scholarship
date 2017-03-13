@@ -118,7 +118,7 @@ tennisBall2.frame = CGRect(origin: CGPoint(x: 342, y: 142), size: ballSize)
 view.addSubview(tennisBall2)
 //#-editable-code
 
-//: Make it pop 😏🎾💥
+//: Uncomment to make it pop 😏🎾💥
 //#-editable-code
 //#-code-completion(everything, hide)
 //#-code-completion(identifier, show, ballParty(with: 30, size: ballSize))
