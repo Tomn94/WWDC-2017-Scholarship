@@ -7,22 +7,23 @@ import PlaygroundSupport
 //: Parameters
 
 var elapsedTime: TimeInterval = 0
+
 //#-end-hidden-code
 
 //: Text to be displayed like captions
-let script = ["Subtle Subtitles",
+let script = [/*#-editable-code Provide some strings*/"Subtle Subtitles",
               "A Subtitles Search Engine & Player,\nfor TV Shows & Movies",
               "Used all around the World,\nespecially in Russia 🇷🇺",
               "Helps learning a foreign langage",
               "Customizable",
               "Subtitles File Parser",
-              "Supports AirDrop & iCloud Drive\n\nto transfer subtitles to friends\nor between iOS/macOS devices"]
+              "Supports AirDrop & iCloud Drive\n\nto transfer subtitles to friends\nor between iOS/macOS devices"/*#-end-editable-code*/]
 
 //: Time interval between 2 script lines
-let repeatTime: TimeInterval = 2.5
+let repeatTime: TimeInterval = /*#-editable-code Enter script line on-screen time*/2.5/*#-end-editable-code*/
 
 //: Time interval between 2 updates of the slider and text
-let refreshRate: TimeInterval = 0.1
+let refreshRate: TimeInterval = /*#-editable-code Change refresh rate*/0.1/*#-end-editable-code*/
 
 //#-hidden-code
 //: Resources
@@ -132,21 +133,30 @@ class PlayPauseButton: UIButton {
     
 }
 
-//: Main View
 let mainView = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
+//#-end-hidden-code
+//: Main View parameters
+//#-editable-code
 mainView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 mainView.tintColor = #colorLiteral(red: 1, green: 0.2039215686, blue: 0.1921568627, alpha: 1)
 
-//: Text View
+/*#-end-editable-code*/
+//#-hidden-code
 let label = PaddedLabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 label.text = ""
 label.isHidden = true
 label.numberOfLines = 0
+//#-end-hidden-code
+//: Text View parameters
+//#-editable-code
 label.textAlignment = .center
 label.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.1764705882, blue: 0.1960784314, alpha: 1)
-label.layer.cornerRadius = 5
-label.clipsToBounds = true
 label.padding = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+label.layer.cornerRadius = 5
+
+/*#-end-editable-code*/
+//#-hidden-code
+label.clipsToBounds = true
 mainView.addSubview(label)
 
 //: Controls
