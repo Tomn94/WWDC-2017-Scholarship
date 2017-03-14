@@ -5,7 +5,7 @@
 import PlaygroundSupport
 import UIKit
 
-let frame = CGRect(x: 0, y: 0, width: 430, height: 500)
+let frame = CGRect(x: 0, y: 0, width: 450, height: 500)
 
 let phoneSize = CGSize(width: 174, height: 350)
 let phoneInitial = CGRect(origin: CGPoint(x: -phoneSize.height / 2,
@@ -42,6 +42,7 @@ mainView.addSubview(title)
 title.numberOfLines = 0
 title.textAlignment = .center
 title.textColor = .white
+title.layer.opacity = 0
 title.layer.shadowColor = UIColor.black.cgColor
 title.layer.shadowRadius = 10
 title.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -102,6 +103,11 @@ button.phoneMid = phoneMid
 button.phoneFinal = phoneFinal
 
 mainView.addSubview(button)
+
+UIView.animate(withDuration: 1.5, delay: 0.5, options: [], animations: {
+    title.layer.opacity = 1
+    title.frame.origin.y += 10
+}, completion: nil)
 
 
 //#-end-hidden-code
