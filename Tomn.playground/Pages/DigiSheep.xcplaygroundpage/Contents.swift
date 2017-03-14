@@ -91,7 +91,7 @@ button.flash = flash
 
 button.animationSpeed = animationSpeed
 button.phoneDamping = phoneDamping
-button.phoneVelocity = phoneDamping
+button.phoneVelocity = phoneVelocity
 
 button.ticketInitial = ticketInitial
 button.ticketMid = ticketMid
