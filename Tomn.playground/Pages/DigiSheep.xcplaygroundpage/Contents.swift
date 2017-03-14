@@ -37,6 +37,21 @@ background.frame = mainView.frame
 mainView.addSubview(background)
 background.contentMode = .scaleAspectFill
 
+let title = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height / 2.5))
+mainView.addSubview(title)
+title.numberOfLines = 0
+title.textAlignment = .center
+title.textColor = .white
+title.layer.shadowColor = UIColor.black.cgColor
+title.layer.shadowRadius = 10
+title.layer.shadowOffset = CGSize(width: 0, height: 0)
+title.layer.shadowOpacity = 1
+let attrStr = NSMutableAttributedString(string: "DigiSheep\nSell & Check Tickets\nTested with 2,500 Students")
+attrStr.addAttributes([NSFontAttributeName : UIFont.boldSystemFont(ofSize: 42)], range: NSRange(0..<9))
+attrStr.addAttributes([NSFontAttributeName : UIFont.boldSystemFont(ofSize: 32)], range: NSRange(10..<31))
+attrStr.addAttributes([NSFontAttributeName : UIFont.systemFont(ofSize: 25)], range: NSRange(31..<57))
+title.attributedText = attrStr
+
 let ticket = UIImageView(image: #imageLiteral(resourceName: "ticket.png"))
 ticket.frame = ticketInitial
 mainView.addSubview(ticket)
