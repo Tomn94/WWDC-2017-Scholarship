@@ -3,10 +3,11 @@
     <pages>
         <page name='Me'/>
         <page name='Travel'/>
-        <page name='Hobbies'/>
         <page name='Ninja'/>
         <page name='Space'/>
         <page name='Subtle Subtitles'/>
         <page name='DigiSheep'/>
+        <page name='Skills'/>
+        <page name='Hobbies'/>
     </pages>
 </playground>
