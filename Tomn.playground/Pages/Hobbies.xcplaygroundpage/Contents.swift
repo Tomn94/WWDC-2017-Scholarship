@@ -9,8 +9,47 @@ import AVFoundation
 let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
 
 //#-end-hidden-code
+//: Pictures to display as a slideshow
+let backgroundImages: [UIImage] = [/*#-editable-code Select pictures*/#imageLiteral(resourceName: "painting1.jpg"), #imageLiteral(resourceName: "painting2.jpg"), #imageLiteral(resourceName: "painting3.jpg"), #imageLiteral(resourceName: "painting4.jpg")/*#-end-editable-code*/]
+
+//: Time between 2 background pictures
+let rotationTime: TimeInterval = /*#-editable-code Adjust time*/3/*#-end-editable-code*/
+
+//: Picture shape of the bouncing balls for dynamics
 let imageShapeType: UIDynamicItemCollisionBoundsType = /*#-editable-code Select a picture shape*/.ellipse/*#-end-editable-code*/
+
+//: Change gravity force
+let gravityMagnitude: CGFloat = /*#-editable-code Change gravity*/5/*#-end-editable-code*/
+
 //#-hidden-code
+
+/* Configure background */
+var currentImageIndex = 0
+let backgroundImage = currentImageIndex < backgroundImages.count ? backgroundImages[currentImageIndex] : nil
+let imageView = UIImageView(image: backgroundImage)
+imageView.frame = view.frame
+view.addSubview(imageView)
+imageView.contentMode = .scaleAspectFill
+
+/// Makes background transitions
+func playSlideshow() {
+    
+    guard backgroundImages.count > 0 else {
+        return
+    }
+    
+    /* Animate change */
+    let animation = CATransition()
+    animation.duration = 1
+    animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+    animation.type = "cube"
+    animation.subtype = kCATransitionFromRight
+    imageView.layer.add(animation, forKey: nil)
+    
+    /* Choose next picture in the stack */
+    currentImageIndex = (currentImageIndex + 1) % backgroundImages.count
+    imageView.image = backgroundImages[currentImageIndex]
+}
 
 /// URL to sound file played when the view is tapped
 let serveSound = URL(fileURLWithPath: Bundle.main.path(forResource: "service", ofType: "mp3")!)
@@ -22,24 +61,29 @@ let animator = UIDynamicAnimator(referenceView: view)
 
 var gravityBehavior: UIGravityBehavior?
 
-/* Collides with superview (reference) */
+/// Collides with superview (reference)
 func addDynamics() {
+    
     animator.removeAllBehaviors()
     
+    let subviews = view.subviews.filter { subview -> Bool in
+        subview.frame != view.frame
+    }
+
     /* All views collide */
-    let collisionBehavior = UICollisionBehavior(items: view.subviews)
+    let collisionBehavior = UICollisionBehavior(items: subviews)
     collisionBehavior.translatesReferenceBoundsIntoBoundary = true
     animator.addBehavior(collisionBehavior)
     
     /* All views have inertia and “push back” after collisions */
-    let elasticityBehavior = UIDynamicItemBehavior(items: view.subviews)
+    let elasticityBehavior = UIDynamicItemBehavior(items: subviews)
     elasticityBehavior.elasticity = 0.7
-    elasticityBehavior.friction = 1.0
+    elasticityBehavior.friction = 0.9
     animator.addBehavior(elasticityBehavior)
     
-    /* Organize view with gravity, and let them fall at first */
-    gravityBehavior = UIGravityBehavior(items: view.subviews)
-    gravityBehavior!.magnitude = 5
+    /* Organize view with gravity, and let them fall */
+    gravityBehavior = UIGravityBehavior(items: subviews)
+    gravityBehavior!.magnitude = gravityMagnitude
     animator.addBehavior(gravityBehavior!)
 }
 
@@ -87,9 +131,6 @@ class BouncingImageView: UIImageView {
     
     /// Squashes the view
     func bounce() {
-        if let gravity = gravityBehavior {
-            animator.removeBehavior(gravity)
-        }
         
         let pusher = UIPushBehavior(items: [self], mode: .instantaneous)
         pusher.pushDirection = CGVector(dx: 20, dy: 10)
@@ -101,33 +142,40 @@ class BouncingImageView: UIImageView {
 }
 //#-end-hidden-code
 
-/// Falling and bouncing images
+//: Falling and bouncing images
 let tennisImage = /*#-editable-code Choose a picture*/#imageLiteral(resourceName: "tennis.png")/*#-end-editable-code*/
 
-/// Size of the images
+//: Size of the images
 let ballSize = CGSize(width: /*#-editable-code Enter Width*/75/*#-end-editable-code*/, height: /*#-editable-code Enter Height*/75/*#-end-editable-code*/)
 
 //: Add colliding objects
 //#-editable-code
+/* First animated tennis ball */
 let tennisBall = BouncingImageView(image: tennisImage)
 tennisBall.frame = CGRect(origin: CGPoint(x: 95, y: 0), size: ballSize)
 view.addSubview(tennisBall)
 
+/* And another one */
 let tennisBall2 = BouncingImageView(image: tennisImage)
 tennisBall2.frame = CGRect(origin: CGPoint(x: 342, y: 142), size: ballSize)
 view.addSubview(tennisBall2)
-//#-editable-code
+//#-end-editable-code
 
 //: Uncomment to make it pop 😏🎾💥
 //#-editable-code
 //#-code-completion(everything, hide)
 //#-code-completion(identifier, show, ballParty(with: 30, size: ballSize))
 //#-code-completion(keyword, for)
-//ballParty(with: 30, size: ballSize)
+ballParty(with: 30, size: ballSize)
 /*#-end-editable-code*/
 
 //: ## Add some gravity at first, then inertia, collisions…
 addDynamics()
+
+//: ## Animate background
+Timer.scheduledTimer(withTimeInterval: rotationTime, repeats: true) { _ in
+    playSlideshow()
+}
 
 //: ## Load sound
 audioPlayer.prepareToPlay()
