@@ -3,10 +3,13 @@
     <pages>
         <page name='Me'/>
         <page name='Travel'/>
-        <page name='Ninja'/>
+        <page name='First Steps'/>
+        <page name='Tramigo'/>
+        <page name='Students’ Union'/>
         <page name='Space'/>
-        <page name='Subtle Subtitles'/>
+        <page name='Oasis'/>
         <page name='DigiSheep'/>
+        <page name='Subtle Subtitles'/>
         <page name='Skills'/>
         <page name='Hobbies'/>
     </pages>
