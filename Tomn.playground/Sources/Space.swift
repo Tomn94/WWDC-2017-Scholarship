@@ -217,7 +217,7 @@ public class SpaceGameScene: SKScene {
         bomb.setScale(level == 1 ? 0.195 : 0.165)
         bomb.zPosition = 1
         bomb.position = CGPoint(x: bomb.size.width + CGFloat(arc4random_uniform(UInt32(self.size.width - (2 * bomb.size.width)))),
-                                y: self.size.height);
+                                y: self.size.height)
         
         bomb.userData = ["level"  : level,
                          "nbrHit" : 0]
@@ -247,7 +247,7 @@ public class SpaceGameScene: SKScene {
         bonus.setScale(0.25)
         bonus.zPosition = 1
         bonus.position = CGPoint(x: bonus.size.width + CGFloat(arc4random_uniform(UInt32(self.size.width - (2 * bonus.size.width)))),
-                                 y: self.size.height);
+                                 y: self.size.height)
         
         let bonusPhysicsBody = SKPhysicsBody(circleOfRadius: bonus.size.width / 2)
         bonusPhysicsBody.isDynamic = false
@@ -270,7 +270,7 @@ public class SpaceGameScene: SKScene {
     
     func updateScore(by diff: Int) {
         
-        score += diff;
+        score += diff
         
         scoreHUD.text = String(format: "%05d", score)
     }
@@ -319,7 +319,7 @@ public class SpaceGameScene: SKScene {
                                           y: size.height * 3 / 2)
         } else {
             background.position = CGPoint(x: background.position.x,
-                                          y: background.position.y - 1);
+                                          y: background.position.y - 1)
         }
         
         if background2.position.y - 1 == -size.height / 2 {
