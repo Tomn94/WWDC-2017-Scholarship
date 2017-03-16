@@ -1,9 +1,18 @@
 //: [Previous](@previous)
 
+//#-hidden-code
+
 import SpriteKit
 import PlaygroundSupport
 
 let scene = SkillScene()
+//#-end-hidden-code
+
+//: Change physics
+scene.velocityFact = /*#-editable-code Change physics*/1/*#-end-editable-code*/
+
+//: Edit skills bubbles, their importance, and the text size inside
+//#-editable-code
 scene.skills = [
       Skill(name: "iOS",               size: .big,    fontSize: 35),
       Skill(name: "Android",           size: .big,    fontSize: 24),
@@ -58,10 +67,13 @@ scene.skills = [
 //      Skill(name: "Signal processing", size: .medium)
     ]
 
+//#-end-editable-code
+//#-hidden-code
+
 let view = SKView(frame: CGRect(x: 0, y: 0, width: 450, height: 600))
 view.presentScene(scene)
-view.showsFields = true
 
 PlaygroundPage.current.liveView = view
+//#-end-hidden-code
 
 //: [Next](@next)

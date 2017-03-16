@@ -26,7 +26,7 @@ class SkillNode: SKNode {
     
     let skill: Skill
     
-    init(with skill: Skill) {
+    init(with skill: Skill, velocityFact: CGFloat = 1) {
         
         // Set up the skill before setting self
         self.skill = skill
@@ -55,8 +55,8 @@ class SkillNode: SKNode {
         body.affectedByGravity = false
         body.linearDamping = skill.size == .big ? 0.5 : 0   // friction
         body.restitution = 1      // don't lose velocity when colliding
-        let signX: CGFloat = Int(skill.fontSize) & 1 == 0 ? -1 : 1
-        let signY: CGFloat = Int(skill.fontSize) & 2 == 0 ? -1 : 1
+        let signX: CGFloat = Int(skill.fontSize) & 1 == 0 ? -velocityFact : velocityFact
+        let signY: CGFloat = Int(skill.fontSize) & 2 == 0 ? -velocityFact : velocityFact
         /// Initial speed of the skill, depending on its size
         let velocity = Skill.SkillSize.big.rawValue + Skill.SkillSize.small.rawValue - skill.size.rawValue
         body.velocity = CGVector(dx: signX * velocity,
@@ -76,6 +76,8 @@ public class SkillScene: SKScene {
     /// Skills displayed in the scene
     public var skills = [Skill]()
     
+    public var velocityFact: CGFloat = 1
+    
     
     /// Initial configuration of the scene
     ///
@@ -90,7 +92,7 @@ public class SkillScene: SKScene {
         
         /* Add every skill */
         for skill in skills {
-            let node = SkillNode(with: skill)
+            let node = SkillNode(with: skill, velocityFact: velocityFact)
             var suggestedPos = CGPoint.zero
             
             repeat {    // avoid overlapping skills
@@ -120,11 +122,11 @@ public class SkillScene: SKScene {
                 if let skillNode = node as? SkillNode {
                     
                     /* Direction depending on the distance with the finger */
-                    let signX: CGFloat = skillNode.position.x - touchLoc.x > 0 ? 3 : -3
-                    let signY: CGFloat = skillNode.position.y - touchLoc.y > 0 ? 3 : -3
+                    let signX: CGFloat = skillNode.position.x - touchLoc.x > 0 ? velocityFact : -velocityFact
+                    let signY: CGFloat = skillNode.position.y - touchLoc.y > 0 ? velocityFact : -velocityFact
                     let skillSize = skillNode.skill.size.rawValue
-                    skillNode.physicsBody?.velocity = CGVector(dx: signX * (velocity - skillSize),
-                                                               dy: signY * (velocity - skillSize))
+                    skillNode.physicsBody?.velocity = CGVector(dx: 3 * signX * (velocity - skillSize),
+                                                               dy: 3 * signY * (velocity - skillSize))
                 }
             }
         }
