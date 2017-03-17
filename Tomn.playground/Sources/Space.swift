@@ -34,7 +34,7 @@ public class SpaceGameScene: SKScene {
     let bonusSpawnTime: TimeInterval = 8
     
     public var lvl2MinScore = 40
-    public var lvl2ProbRange: UInt32 = 1000
+    public var lvl2ProbRange: UInt32 = 1
     public var bombLvl2MaxHit = 4
     
     var score = 0
@@ -144,7 +144,7 @@ public class SpaceGameScene: SKScene {
             
             /* Bomb */
             if currentTime - lastSpawnTime > bombsSpawnTime {
-                let bombLevel = score >= lvl2MinScore && Int(arc4random_uniform(lvl2ProbRange)) < score ? 1 : 0
+                let bombLevel = score >= lvl2MinScore && Int(arc4random_uniform(lvl2ProbRange * 1000)) < score ? 1 : 0
                 dropBomb(level: bombLevel)
                 lastSpawnTime = currentTime
             }

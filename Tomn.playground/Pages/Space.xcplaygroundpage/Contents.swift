@@ -2,25 +2,25 @@
 
 //: ### Life Points
 //: Starts with 3 LP by default, but this can be played hardcore-style (0..<8)
-let initialLives = 1
+let initialLives: Int = /*#-editable-code Life Points*/1/*#-end-editable-code*/
 
 //: ### Flying Objects Physics
 //: Speed of the missiles launched when the screen is tapped
-let missilesSpeed = 0.8
+let missilesSpeed = /*#-editable-code Speed of the missiles you launch*/0.8/*#-end-editable-code*/
 //: Speed of the bombs passing along the screen height
-let bombOnScreenTime = 2.1
+let bombOnScreenTime = /*#-editable-code Speed of the flying bombs*/2.1/*#-end-editable-code*/
 //: Time interval between 2 bombs apparition
-let bombsSpawnTime = 0.5
+let bombsSpawnTime = /*#-editable-code Mean time between 2 bombs*/0.5/*#-end-editable-code*/
 //: Ship ability to respond to tilting iPad event
-let shipMoveForce = 55.0
+let shipMoveForce = /*#-editable-code Tilt factor*/55.0/*#-end-editable-code*/
 
 //: ### Level 2 Parameters - Spaceships
 //: Minimum score to unblock level 2 ships
-let lvl2MinScore = 10
+let lvl2MinScore = /*#-editable-code Minimum score to obtain*/10/*#-end-editable-code*/
 //: Probability a LVL1-bomb is turned into a LVL2-ship
-let lvl2ProbRange = 1000
-//: Number of missiles a ship needed to destroy the LVL2-ship
-let lvl2BombMaxHit = 4
+let lvl2ProbRange = /*#-editable-code At level 2, probability of new ships*/1/*#-end-editable-code*/
+//: Number of missiles needed to destroy the LVL2-ship
+let lvl2BombMaxHit = /*#-editable-code Number of hits*/4/*#-end-editable-code*/
 
 //#-hidden-code
 
