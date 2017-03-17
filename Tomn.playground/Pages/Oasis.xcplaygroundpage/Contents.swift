@@ -1,7 +1,7 @@
 //: [Previous](@previous)
 
 //: Starts with 3 LP by default, but this can be played hardcore-style (0..<4)
-let startLives = /*#-editable-code Choose the initial number of lives*/3/*#-end-editable-code*/
+let startLives: Int = /*#-editable-code Choose the initial number of lives*/3/*#-end-editable-code*/
 //: Time interval probability between 2 items, decreases over time
 let spawnTimeProbability: UInt32 = /*#-editable-code Decrease to play faster*/50/*#-end-editable-code*/
 
