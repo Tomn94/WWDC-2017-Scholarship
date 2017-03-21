@@ -45,7 +45,7 @@ public class TicketScanButton: UIButton {
         
         UIView.animate(withDuration: 0.2 * animationSpeed,
                        delay: 0, animations: {
-                        self.layer.opacity = 0
+                        self.alpha = 0
         }, completion: { _ in
             
             UIView.animate(withDuration: 1.5 * animationSpeed,
@@ -84,7 +84,7 @@ public class TicketScanButton: UIButton {
                                 
                                 UIView.animate(withDuration: 0.2 * animationSpeed,
                                                delay: 0.5 * animationSpeed, animations: {
-                                                self.layer.opacity = 1
+                                                self.alpha = 1
                                 })
                             })
                         })

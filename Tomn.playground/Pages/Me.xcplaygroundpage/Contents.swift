@@ -59,7 +59,7 @@ title.text = "Thomas Naudet"
 title.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 title.textAlignment = .center
 title.font = UIFont.boldSystemFont(ofSize: 40)
-title.layer.opacity = 0.8
+title.alpha = 0.8
 
 /// Add subtitle
 let subtitle = UILabel()
@@ -68,7 +68,7 @@ subtitle.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 subtitle.textAlignment = .center
 subtitle.numberOfLines = 2
 subtitle.font = UIFont.systemFont(ofSize: 22)
-subtitle.layer.opacity = 0.75
+subtitle.alpha = 0.75
 
 /// Main layout
 let verticalStack = UIStackView(arrangedSubviews: [sceneView, title, subtitle])

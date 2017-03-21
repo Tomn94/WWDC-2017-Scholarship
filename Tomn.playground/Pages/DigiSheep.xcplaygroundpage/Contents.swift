@@ -47,7 +47,7 @@ mainView.addSubview(title)
 title.numberOfLines = 0
 title.textAlignment = .center
 title.textColor = .white
-title.layer.opacity = 0
+title.alpha = 0
 title.layer.shadowColor = UIColor.black.cgColor
 title.layer.shadowRadius = 10
 title.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -126,7 +126,7 @@ button.phoneMid = phoneMid
 button.phoneFinal = phoneFinal
 
 UIView.animate(withDuration: 1.5 * animationsSpeed, delay: 0.5, options: [], animations: {
-    title.layer.opacity = 1
+    title.alpha = 1
     title.frame.origin.y += 10
 }, completion: nil)
 
