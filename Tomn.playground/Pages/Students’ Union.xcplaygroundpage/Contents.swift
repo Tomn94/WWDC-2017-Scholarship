@@ -1,17 +1,12 @@
 //: [Previous](@previous)
 /*:
  - callout(A Look at My Projects): Then I created an app for the Students’ Union compaign. One notable feature was Students from my Engineering School had to walk around in the city to find hidden QRcodes, and scan them with the app.\
-     Once elected I further developed the app with the following features:
+     Once elected I further developed the app with the following features.\
+     Everything can be managed from a Portal back-end I created with 20 services.
  */
 
 import UIKit
 import PlaygroundSupport
-
-struct Feature {
-    let title: String
-    let icon: UIImage
-    let screenshot: UIImage
-}
 
 //: ### Main View & Background
 let view = UIView(frame: CGRect(x: 0, y: 0, width: 450, height: 600))
@@ -49,7 +44,7 @@ cloud.contentMode = .center
 view.addSubview(cloud)
 
 let features: [Feature] = [
-    Feature(title: "Unions News", icon: #imageLiteral(resourceName: "su-newsIcon.png"), screenshot: #imageLiteral(resourceName: "su-newsScreen.png")),
+    Feature(title: "News published by Unions", icon: #imageLiteral(resourceName: "su-newsIcon.png"), screenshot: #imageLiteral(resourceName: "su-newsScreen.png")),
     
     Feature(title: "Upcoming Events", icon: #imageLiteral(resourceName: "su-eventsIcon.png"), screenshot: #imageLiteral(resourceName: "su-eventsScreen.png")),
     
@@ -74,70 +69,9 @@ let features: [Feature] = [
     Feature(title: "User Profile & Preferences", icon: #imageLiteral(resourceName: "su-userIcon.png"), screenshot: #imageLiteral(resourceName: "su-userScreen.png"))
 ]
 
-class PopoverController: UIViewController, UIPopoverPresentationControllerDelegate {
-    
-    convenience init(feature: Feature) {
-        self.init()
-        
-        let description = UILabel()
-        description.text = feature.title
-        description.textColor = .gray
-        description.numberOfLines = 0
-        description.textAlignment = .center
-        description.addConstraint(NSLayoutConstraint(item: description,
-                                                     attribute: .height,
-                                                     relatedBy: .greaterThanOrEqual,
-                                                     toItem: nil,
-                                                     attribute: .height,
-                                                     multiplier: 1,
-                                                     constant: 40))
-        
-        let screenshot = UIImageView(image: feature.screenshot)
-        screenshot.contentMode = .scaleAspectFit
-        
-        let stackView = UIStackView(arrangedSubviews: [description, screenshot])
-        stackView.axis = .vertical
-        
-        self.view = stackView
-        self.modalPresentationStyle = .popover
-        self.preferredContentSize = CGSize(width: 383, height: 400)
-    }
-    
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-    
-}
-
-class PopButton: UIButton {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        addTarget(self, action: #selector(PopButton.showPopup), for: .touchUpInside)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func showPopup() {
-        
-        let popover = PopoverController(feature: features[0])
-        
-        if let popoverPresentCtrl = popover.popoverPresentationController {
-            popoverPresentCtrl.sourceRect = self.frame
-            popoverPresentCtrl.sourceView = view
-            popoverPresentCtrl.delegate = popover
-        }
-        
-        mainVC.present(popover, animated: true)
-    }
-    
-}
-
 let button = PopButton(frame: CGRect(x: 200, y: 200, width: 50, height: 50))
-button.setImage(features[0].icon.withRenderingMode(.alwaysTemplate), for: .normal)
+button.feature = features[0]
+button.mainController = mainVC
 view.addSubview(button)
 
 
