@@ -54,11 +54,11 @@ let features: [Feature] = [
     
     Feature(title: "Shared Documents", icon: #imageLiteral(resourceName: "su-docsIcon.png"), screenshot: #imageLiteral(resourceName: "su-docsScreen.png")),
     
-    Feature(title: "Meal Ordering System, includes paying with iOS", icon: #imageLiteral(resourceName: "su-orderIcon.png"), screenshot: #imageLiteral(resourceName: "su-orderScreen.png")),
+    Feature(title: "Meal Ordering System,\nincludes paying with iOS", icon: #imageLiteral(resourceName: "su-orderIcon.png"), screenshot: #imageLiteral(resourceName: "su-orderScreen.png")),
     
     Feature(title: "Push Notifications for Events and Deliveries", icon: #imageLiteral(resourceName: "su-pushIcon.png"), screenshot: #imageLiteral(resourceName: "su-pushScreen.png")),
     
-    Feature(title: "Events & Tickets Ordering, includes paying with iOS", icon: #imageLiteral(resourceName: "su-ticketsIcon.png"), screenshot: #imageLiteral(resourceName: "su-ticketsScreen.png")),
+    Feature(title: "Events & Tickets Ordering,\nincludes paying with iOS", icon: #imageLiteral(resourceName: "su-ticketsIcon.png"), screenshot: #imageLiteral(resourceName: "su-ticketsScreen.png")),
     
     Feature(title: "iMessage Stickers", icon: #imageLiteral(resourceName: "su-stickersIcon.png"), screenshot: #imageLiteral(resourceName: "su-stickersScreen.png")),
     
@@ -69,10 +69,49 @@ let features: [Feature] = [
     Feature(title: "User Profile & Preferences", icon: #imageLiteral(resourceName: "su-userIcon.png"), screenshot: #imageLiteral(resourceName: "su-userScreen.png"))
 ]
 
-let button = PopButton(frame: CGRect(x: 200, y: 200, width: 50, height: 50))
-button.feature = features[0]
-button.mainController = mainVC
-view.addSubview(button)
+let center = view.center
+let cloudSize = CGSize(width: 300, height: 200)
+let titleHeight = title.frame.height
+let xUpperBound = UInt32(cloudSize.width * 1.2)
+let yUpperBound = UInt32(center.y - (titleHeight * 1.2))
+let angleBound  = UInt32(20)    // degrees
+let margins = UIEdgeInsets(top: -20, left: -20, bottom: -20, right: -20)
+
+var buttonsFrames = [CGRect]()
+
+extension CGRect {
+    
+    func intersects(_ rects: [CGRect]) -> Bool {
+        
+        for rect in rects {
+            if self.intersects(rect) {
+                return true
+            }
+        }
+        return false
+        
+    }
+    
+}
+
+for feature in features {
+    
+    var newButtonFrame = CGRect.zero
+    repeat {
+        let x = center.x - cloudSize.width / 1.5 + CGFloat(arc4random_uniform(xUpperBound))
+        let y = titleHeight + CGFloat(arc4random_uniform(yUpperBound))
+        newButtonFrame = CGRect(x: x, y: y, width: 42, height: 42)
+    } while newButtonFrame.intersects(buttonsFrames)
+    
+    let button = PopButton(frame: newButtonFrame)
+    button.feature = feature
+    button.mainController = mainVC
+    button.transform = CGAffineTransform(rotationAngle: (-CGFloat(angleBound) / 2 + CGFloat(arc4random_uniform(angleBound))) * CGFloat.pi / 180)
+
+    view.addSubview(button)
+    buttonsFrames.append(UIEdgeInsetsInsetRect(button.frame, margins))
+}
+
 
 
 //: [Next](@next)

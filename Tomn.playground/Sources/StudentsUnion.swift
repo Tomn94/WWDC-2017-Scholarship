@@ -77,6 +77,7 @@ public class PopButton: UIButton {
             popoverPresentCtrl.sourceRect = self.frame
             popoverPresentCtrl.sourceView = mainController.view
             popoverPresentCtrl.delegate = popover
+            popoverPresentCtrl.permittedArrowDirections = .up
         }
         
         mainController.present(popover, animated: true)
