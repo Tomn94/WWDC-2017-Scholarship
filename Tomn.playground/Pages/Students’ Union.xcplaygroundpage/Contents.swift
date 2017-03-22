@@ -7,6 +7,7 @@
 import UIKit
 import PlaygroundSupport
 
+//: ### Main View & Background
 let view = UIView(frame: CGRect(x: 0, y: 0, width: 450, height: 600))
 
 /* Configure gradient layer of the background */
@@ -17,9 +18,23 @@ view.layer.addSublayer(gradientLayer)
 
 PlaygroundPage.current.liveView = view
 
-/* Add cloud glyph in center */
+//: ### Title
+let title = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))
+title.text = "ESEO Students’ Union"
+title.font = UIFont.boldSystemFont(ofSize: 42)
+title.textColor = .white
+title.numberOfLines = 0
+title.textAlignment = .center
+title.layer.shadowColor   = UIColor.black.cgColor
+title.layer.shadowRadius  = 3
+title.layer.shadowOffset  = CGSize(width: 0, height: 0)
+title.layer.shadowOpacity = 0.4
+view.addSubview(title)
+
+//: ### Add cloud glyph in center
 let cloud = UIImageView(image: #imageLiteral(resourceName: "su-cloud.png"))
 cloud.frame = view.frame
+cloud.center.y += title.frame.height * 2
 cloud.contentMode = .center
 view.addSubview(cloud)
 
