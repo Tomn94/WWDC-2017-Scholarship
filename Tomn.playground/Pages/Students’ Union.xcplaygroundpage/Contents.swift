@@ -79,9 +79,28 @@ class PopoverController: UIViewController, UIPopoverPresentationControllerDelega
     convenience init(feature: Feature) {
         self.init()
         
-        self.view = UIImageView(image: #imageLiteral(resourceName: "bonus.png"))
+        let description = UILabel()
+        description.text = feature.title
+        description.textColor = .gray
+        description.numberOfLines = 0
+        description.textAlignment = .center
+        description.addConstraint(NSLayoutConstraint(item: description,
+                                                     attribute: .height,
+                                                     relatedBy: .greaterThanOrEqual,
+                                                     toItem: nil,
+                                                     attribute: .height,
+                                                     multiplier: 1,
+                                                     constant: 40))
+        
+        let screenshot = UIImageView(image: feature.screenshot)
+        screenshot.contentMode = .scaleAspectFit
+        
+        let stackView = UIStackView(arrangedSubviews: [description, screenshot])
+        stackView.axis = .vertical
+        
+        self.view = stackView
         self.modalPresentationStyle = .popover
-        self.preferredContentSize = CGSize(width: 100, height: 100)
+        self.preferredContentSize = CGSize(width: 383, height: 400)
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
