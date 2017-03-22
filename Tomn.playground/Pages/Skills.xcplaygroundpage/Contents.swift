@@ -1,4 +1,7 @@
 //: [Previous](@previous)
+/*:
+ - callout(Skills): I'm curious and I always want to discover new technologies. This helps me learn the following ones:
+ */
 
 //#-hidden-code
 
@@ -11,7 +14,7 @@ let scene = SkillScene()
 //: Change physics
 scene.velocityFact = /*#-editable-code Change physics*/1/*#-end-editable-code*/
 
-//: Edit skills bubbles, their importance, and the text size inside
+//: Edit skills bubbles, their importance, and the text size inside. Comment one to hide it from the view
 //#-editable-code
 scene.skills = [
       Skill(name: "iOS",               size: .big,    fontSize: 35),

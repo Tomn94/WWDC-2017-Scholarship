@@ -1,4 +1,7 @@
 //: Playground - noun: a place where I like to prototype my new iOS/macOS/watchOS/tvOS apps
+/*:
+ - callout(Hello): Welcome to my Swift Playground, feel free to edit my code and interact with the preview
+ */
 
 //#-hidden-code
 import UIKit

@@ -1,17 +1,20 @@
 //: [Previous](@previous)
+/*:
+ - callout(Travel): I like to discover the world, here is where I had the chance to live or visit
+ */
 
 //#-hidden-code
 import MapKit
 import PlaygroundSupport
 //#-end-hidden-code
 
-/// Define the size of the flags
+//: Define the size of the flags
 let pinSize:             CGFloat = /*#-editable-code Define the size of the flags*/42/*#-end-editable-code*/
 
-/// Enter a number of seconds after which the map animation starts
+//: Enter a number of seconds after which the map animation starts
 let animationDelay: TimeInterval = /*#-editable-code Enter a number of seconds after which the map animation starts*/2/*#-end-editable-code*/
 
-/// Enter a plane speed multiplier
+//: Enter a plane speed multiplier
 let planeSpeed:     TimeInterval = /*#-editable-code Enter a plane speed multiplier*/1/*#-end-editable-code*/
 
 //: Displayed countries

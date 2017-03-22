@@ -1,4 +1,7 @@
 //: [Previous](@previous)
+/*:
+ - callout(Also in Students’ Union app): 1 year later, I added this other fruity game
+ */
 
 //: Starts with 3 LP by default, but this can be played hardcore-style (0..<4)
 let startLives: Int = /*#-editable-code Choose the initial number of lives*/3/*#-end-editable-code*/

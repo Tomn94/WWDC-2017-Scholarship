@@ -1,4 +1,7 @@
 //: [Previous](@previous)
+/*:
+ - callout(Also in Students’ Union app): I made this hidden game for students
+ */
 
 //: ### Life Points
 //: Starts with 3 LP by default, but this can be played hardcore-style (0..<8)

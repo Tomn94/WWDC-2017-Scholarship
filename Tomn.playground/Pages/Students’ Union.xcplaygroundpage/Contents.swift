@@ -1,4 +1,8 @@
 //: [Previous](@previous)
+/*:
+ - callout(A Look at My Projects): Then I created an app for the Students’ Union compaign. One notable feature was Students from my Engineering School had to walk around in the city to find hidden QRcodes, and scan them with the app.\
+     Once elected I further developed the app with the following features:
+ */
 
 import UIKit
 import PlaygroundSupport
