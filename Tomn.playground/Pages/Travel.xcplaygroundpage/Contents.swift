@@ -14,6 +14,9 @@ let animationDelay: TimeInterval = /*#-editable-code Enter a number of seconds a
 /// Enter a plane speed multiplier
 let planeSpeed:     TimeInterval = /*#-editable-code Enter a plane speed multiplier*/1/*#-end-editable-code*/
 
+//: Displayed countries
+let countries: [MKAnnotation] = [/*#-editable-code Edit pins*/france, hongkong, macao, uk, ireland, germany, china, morocco, czech, belgium, italy, luxembourg, greece, spain, vietnam, myanmar, thailand, cambodia, japan/*#-end-editable-code*/]
+
 //#-hidden-code
 
 //: ## Create the map (main view)
@@ -25,10 +28,10 @@ map.delegate = delegate
 //#-end-hidden-code
 map.mapType = /*#-editable-code Change map*/.satellite/*#-end-editable-code*/
 //#-hidden-code
-map.region = MKCoordinateRegionMake(angers.coordinate,
+map.region = MKCoordinateRegionMake(france.coordinate,
                                     MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
 
-map.addAnnotations(cities)
+map.addAnnotations(countries)
 map.addAnnotation(plane)
 
 //: ## Configure playground
@@ -68,7 +71,7 @@ Timer.scheduledTimer(withTimeInterval: animationDelay + 4.8, repeats: false) { _
 
 //: ### Unzoom to global scale
 Timer.scheduledTimer(withTimeInterval: animationDelay + 9, repeats: false) { _ in
-    map.showAnnotations(cities, animated: true)
+    map.showAnnotations(countries, animated: true)
 }
 //#-end-hidden-code
 

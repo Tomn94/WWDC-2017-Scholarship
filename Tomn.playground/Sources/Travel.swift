@@ -68,7 +68,7 @@ public class MapDelegate: NSObject, MKMapViewDelegate {
 }
 
 //: ## Create pins
-public let angers = Annotation(at: CLLocationCoordinate2D(latitude: 47.493404, longitude: -0.550958),
+public let france = Annotation(at: CLLocationCoordinate2D(latitude: 47.493404, longitude: -0.550958),
                         title: "Angers, France", subtitle: "My Engineering School 🎓",
                         pin: "🇫🇷")
 
@@ -144,11 +144,9 @@ public let japan = Annotation(at: CLLocationCoordinate2D(latitude: 35.6895, long
                        title: "Japan", subtitle: nil,
                        pin: "🇯🇵")
 
-public let cities = [angers, hongkong, macao, uk, ireland, germany, china, morocco, czech, belgium, italy, luxembourg, greece, spain, vietnam, myanmar, thailand, cambodia, japan]
-
 /// This pin is me
-public let plane = Annotation(at: CLLocationCoordinate2D(latitude: angers.coordinate.latitude - 0.4,
-                                                  longitude: angers.coordinate.longitude + 0.8),
+public let plane = Annotation(at: CLLocationCoordinate2D(latitude: france.coordinate.latitude - 0.4,
+                                                  longitude: france.coordinate.longitude + 0.8),
                        title: "Me 👨🏼‍💻", subtitle: nil,
                        pin: "🛩")
 
