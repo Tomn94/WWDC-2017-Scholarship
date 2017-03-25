@@ -26,11 +26,11 @@ public class SpaceGameScene: SKScene {
     
     public var shipMoveFact = 55.0
     public var missilesSpeed = 0.8
-    let missilesDelay: TimeInterval = 0.18
+    public var missilesDelay: TimeInterval = 0.2
     public var bombsSpawnTime: TimeInterval = 0.5
     public var bombShowTime = 2.1
     let bonusShowTime = 3.0
-    let bonusMinScore = 15
+    let bonusMinScore = 1
     let bonusSpawnTime: TimeInterval = 8
     
     public var lvl2MinScore = 40
@@ -52,14 +52,16 @@ public class SpaceGameScene: SKScene {
     var scoreHUD: SKLabelNode!
     var livesHUD = [SKSpriteNode]()
     
-    let motionManager = CMMotionManager()
+    public var deviceOrientation = UIDeviceOrientation.landscapeLeft
+    
+    var motionManager: CMMotionManager?
     
     var contactQueue = [SKPhysicsContact]()
     
     override public init(size: CGSize) {
         super.init(size: size)
         
-        scaleMode = .aspectFill
+        scaleMode = .aspectFit
         backgroundColor = #colorLiteral(red: 0.1176470588, green: 0.2352941176, blue: 0.5098039216, alpha: 1)
         
         physicsWorld.contactDelegate = self
@@ -113,12 +115,15 @@ public class SpaceGameScene: SKScene {
             livesHUD.append(life)
             addChild(life)
         }
-        
-        motionManager.startAccelerometerUpdates()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func didMove(to view: SKView) {
+        motionManager = CMMotionManager()
+        motionManager?.startAccelerometerUpdates()
     }
     
     override public func update(_ currentTime: TimeInterval) {
@@ -163,15 +168,16 @@ public class SpaceGameScene: SKScene {
     
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        if let touch = touches.first {
+        if let touch = touches.first,
+           let planeBody = plane.physicsBody {
             let location = touch.location(in: view)
             let previousLocation = touch.previousLocation(in: view)
             let dx = location.x - previousLocation.x
             let dy = location.y - previousLocation.y
             let dist = Double(sqrt(dx * dx + dy * dy)) * 0.03
-            let sign = Double(dx / abs(dx))
+            let sign = Double(dx == 0 ? dx : (dx / abs(dx)))
             
-            plane.physicsBody?.applyForce(CGVector(dx: sign * dist * shipMoveFact, dy: 0))
+            planeBody.applyForce(CGVector(dx: sign * dist * shipMoveFact, dy: 0))
         }
     }
     
@@ -180,9 +186,29 @@ public class SpaceGameScene: SKScene {
     }
     
     func processUserMotion(_ currentTime: TimeInterval) {
-        if let data = motionManager.accelerometerData,
-            fabs(data.acceleration.x) > 0.2 {
-            plane.physicsBody?.applyForce(CGVector(dx: shipMoveFact, dy: 0))
+        
+        if let manager = motionManager,
+           let data = manager.accelerometerData,
+           let planeBody = plane.physicsBody,
+           fabs(data.acceleration.x) > 0.2 {
+            
+            var acceleration = data.acceleration.x
+            
+            switch deviceOrientation {
+            case .portraitUpsideDown:
+                acceleration = -data.acceleration.x
+                
+            case .landscapeLeft:
+                acceleration = -data.acceleration.y
+                
+            case .landscapeRight:
+                acceleration =  data.acceleration.y
+                
+            default:
+                break
+            }
+            
+            planeBody.applyForce(CGVector(dx: shipMoveFact * acceleration, dy: 0))
         }
     }
     
@@ -348,16 +374,19 @@ extension SpaceGameScene: SKPhysicsContactDelegate {
     
     func handle(_ contact: SKPhysicsContact) {
         
-        guard contact.bodyA.node?.parent != nil &&
-            contact.bodyB.node?.parent != nil else {
+        guard contact.bodyA.node != nil,
+              contact.bodyB.node != nil,
+              contact.bodyA.node?.parent != nil,
+              contact.bodyB.node?.parent != nil else {
                 return
         }
         
         let nodes = [contact.bodyA.node, contact.bodyB.node]
-        let nodeNames = [contact.bodyA.node?.name, contact.bodyB.node?.name]
+        let nodeNames = [contact.bodyA.node?.name,
+                         contact.bodyB.node?.name]
         
         if nodeNames.contains(where: { $0 == NodeName.plane }) &&
-            nodeNames.contains(where: { $0 == NodeName.bomb }) {
+           nodeNames.contains(where: { $0 == NodeName.bomb }) {
             
             /* Plane crash */
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
@@ -416,7 +445,7 @@ class LoseScene: SKScene {
     init(size: CGSize, score: Int) {
         super.init(size: size)
         
-        scaleMode = .aspectFill
+        scaleMode = .aspectFit
         backgroundColor = #colorLiteral(red: 0.1176470588, green: 0.2352941176, blue: 0.5098039216, alpha: 1)
         
         let background = SKSpriteNode(imageNamed: "sky")
@@ -452,11 +481,11 @@ class LoseScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let location = touches.first?.location(in: self),
-            let node = self.nodes(at: location).first {
+        if let touch = touches.first,
+           let node = self.nodes(at: touch.location(in: self)).first {
             if node.name == NodeName.btnRetry {
                 let scene = SpaceGameScene(size: frame.size)
-                scene.scaleMode = .aspectFill
+                scene.scaleMode = .aspectFit
                 let reveal = SKTransition.crossFade(withDuration: 1)
                 view?.presentScene(scene, transition: reveal)
             }
