@@ -7,29 +7,29 @@
 import UIKit
 import PlaygroundSupport
 
-//: Parameters
-
 var elapsedTime: TimeInterval = 0
 
 //#-end-hidden-code
-
-//: Text to be displayed like captions
-let script = [/*#-editable-code Provide some strings*/"Subtle Subtitles",
+/// Text to be displayed like captions
+let script = [
+//#-editable-code
+              "Subtle Subtitles",
               "A Subtitles Search Engine & Player,\nfor TV Shows & Movies",
               "Used all around the World,\nespecially in Russia 🇷🇺",
-              "Helps learning a foreign langage",
+              "Helps learning a foreign language",
               "Customizable",
               "Subtitles File Parser",
-              "Supports AirDrop & iCloud Drive\n\nto transfer subtitles to friends\nor between iOS/macOS devices"/*#-end-editable-code*/]
+              "Supports AirDrop & iCloud Drive\n\nto transfer subtitles to friends\nor between iOS/macOS devices"
+//#-end-editable-code
+             ]
 
-//: Time interval between 2 script lines
+/// Time interval between 2 script lines
 let repeatTime: TimeInterval = /*#-editable-code Enter script line on-screen time*/2.5/*#-end-editable-code*/
 
-//: Time interval between 2 updates of the slider and text
+/// Time interval between 2 updates of the slider and text
 let refreshRate: TimeInterval = /*#-editable-code Change refresh rate*/0.1/*#-end-editable-code*/
-
 //#-hidden-code
-//: Resources
+
 /// Just a standard UILabel, but with some insets
 class PaddedLabel: UILabel {
     
@@ -142,8 +142,7 @@ let mainView = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
 //#-editable-code
 mainView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 mainView.tintColor = #colorLiteral(red: 1, green: 0.2039215686, blue: 0.1921568627, alpha: 1)
-
-/*#-end-editable-code*/
+//#-end-editable-code
 //#-hidden-code
 let label = PaddedLabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 label.text = ""
@@ -156,20 +155,19 @@ label.textAlignment = .center
 label.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.1764705882, blue: 0.1960784314, alpha: 1)
 label.padding = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 label.layer.cornerRadius = 5
-
-/*#-end-editable-code*/
+//#-end-editable-code
 //#-hidden-code
 label.clipsToBounds = true
 mainView.addSubview(label)
 
-//: Controls
+/* Controls */
 let playBtn = PlayPauseButton()
 let slider = ScrubSlider()
 let controls = UIStackView(arrangedSubviews: [playBtn, slider])
 controls.spacing = 10
 mainView.addSubview(controls)
 
-//: Layout
+/* Layout */
 let playButtonSize: CGFloat = 42
 let margins: CGFloat = 10
 label.translatesAutoresizingMaskIntoConstraints = false
@@ -231,7 +229,7 @@ mainView.addConstraints([NSLayoutConstraint(item: label,
                                         multiplier: 1,
                                         constant: playButtonSize)])
 
-//: Time
+/* Time */
 var timer: Timer!
 
 /// Updates text and slider when playing
@@ -257,8 +255,10 @@ func playScript(text label: UILabel, slider: UISlider) {
         label.font = UIFont(name: "GillSans-BoldItalic", size: 42)
     } else if text.lowercased().contains("parse") {
         label.font = UIFont(name: "Courier", size: 30)
+    } else if text.lowercased() == "subtle subtitles" {
+        label.font = UIFont.boldSystemFont(ofSize: 42)
     } else {
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.font = UIFont.systemFont(ofSize: 25)
     }
     
     label.isHidden = label.text?.isEmpty ?? false
@@ -284,15 +284,15 @@ func play() {
     playScript(text: label, slider: slider)
     timer.fire()
 }
-
 //#-end-hidden-code
-//: Auto-start
+
+/// Auto-start
 //#-editable-code
 //#-code-completion(everything, hide)
 //#-code-completion(identifier, show, play())
 play()
-/*#-end-editable-code*/
-//#hidden-code
+//#-end-editable-code
+//#-hidden-code
 
 PlaygroundPage.current.liveView = mainView
 //#-end-hidden-code
