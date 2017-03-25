@@ -89,7 +89,7 @@ public let germany = Annotation(at: CLLocationCoordinate2D(latitude: 48.370, lon
                          pin: "🇩🇪")
 
 public let china = Annotation(at: CLLocationCoordinate2D(latitude: 31.2304, longitude: 121.4737),
-                       title: "Shanghai Summer School", subtitle: nil,
+                       title: "China", subtitle: "Shanghai Summer School",
                        pin: "🇨🇳")
 
 public let morocco = Annotation(at: CLLocationCoordinate2D(latitude: 30.399351, longitude: -9.601969),
@@ -105,7 +105,7 @@ public let belgium = Annotation(at: CLLocationCoordinate2D(latitude: 50.8503, lo
                          pin: "🇧🇪")
 
 public let italy = Annotation(at: CLLocationCoordinate2D(latitude: 43.771521, longitude: 11.254774),
-                       title: "Ireland", subtitle: nil,
+                       title: "Italy", subtitle: nil,
                        pin: "🇮🇹")
 
 public let luxembourg = Annotation(at: CLLocationCoordinate2D(latitude: 49.6116, longitude: 6.1319),
