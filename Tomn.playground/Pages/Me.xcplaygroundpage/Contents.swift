@@ -1,8 +1,8 @@
 //: Playground - noun: a place where I like to prototype my new iOS/macOS/watchOS/tvOS apps
+
 /*:
  - callout(Hello): Welcome to my Swift Playground, feel free to edit my code and interact with the preview
  */
-
 //#-hidden-code
 import UIKit
 import SceneKit
@@ -15,10 +15,10 @@ let avatarSize: CGFloat = /*#-editable-code Modify the size of the avatar*/230/*
 /// Choose the gradient colors of the background
 let backgroundColors = [/*#-editable-code Choose the gradient colors of the background*/#colorLiteral(red: 1, green: 0.2039215686, blue: 0.1921568627, alpha: 1), #colorLiteral(red: 1, green: 0.7411764706, blue: 0.2549019608, alpha: 1), #colorLiteral(red: 0.5607843137, green: 0.7960784314, blue: 0.2470588235, alpha: 1), #colorLiteral(red: 0, green: 0.8980392157, blue: 1, alpha: 1), #colorLiteral(red: 0.1960784314, green: 0.4666666667, blue: 1, alpha: 1), #colorLiteral(red: 0.9843137255, green: 0.4039215686, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.2039215686, blue: 0.1921568627, alpha: 1)/*#-end-editable-code*/]
 
-/// Accelerate the color rotation
+/// Accelerate color rotation
 let backgroundAnimationSpeed: TimeInterval = /*#-editable-code */20/*#-end-editable-code*/
 
-/// Adjust the rotating speed of the avatar after releasing your finger
+/// Adjust the rotating speed of the avatar
 let rotatingInertiaFactor: CGFloat = /*#-editable-code Adjust the rotating speed of the avatar after releasing your finger*/5/*#-end-editable-code*/
 
 //#-hidden-code
@@ -31,18 +31,25 @@ sceneView.backgroundColor = .clear
 sceneView.scene = scene
 sceneView.addConstraints([NSLayoutConstraint(item: sceneView,
                                              attribute: .width,
-                                             relatedBy: .equal,
+                                             relatedBy: .lessThanOrEqual,
                                              toItem: nil,
                                              attribute: .width,
                                              multiplier: 1,
                                              constant: avatarSize),
                           NSLayoutConstraint(item: sceneView,
                                              attribute: .height,
-                                             relatedBy: .equal,
+                                             relatedBy: .greaterThanOrEqual,
                                              toItem: nil,
                                              attribute: .height,
                                              multiplier: 1,
-                                             constant: avatarSize)])
+                                             constant: 70),
+                          NSLayoutConstraint(item: sceneView,
+                                             attribute: .width,
+                                             relatedBy: .equal,
+                                             toItem: sceneView,
+                                             attribute: .height,
+                                             multiplier: 1,
+                                             constant: 0)])
 
 /// Main View
 let view = RotatingResponder(frame: CGRect(x: 0, y: 0, width: 450, height: 600))
@@ -119,8 +126,7 @@ view.isUserInteractionEnabled = true
 
 PlaygroundPage.current.liveView = view
 //#-end-hidden-code
-
-//: Rotate the avatar a bit, indicating it can be further spinned by the user
+//: At launch, rotates the avatar a bit, indicating it can be further spinned by the user
 view.runSpinningHintAnimation()
 
 //: [Next](@next)
