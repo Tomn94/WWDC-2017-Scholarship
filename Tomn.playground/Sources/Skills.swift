@@ -86,9 +86,28 @@ public class SkillScene: SKScene {
         
         /* Basic configuration */
         size = view.frame.size
-        scaleMode = .aspectFit
+        scaleMode = .resizeFill
         backgroundColor = #colorLiteral(red: 0.2196078431, green: 0.2196078431, blue: 0.2078431373, alpha: 1)
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        
+        addSkills()
+    }
+    
+    /// Update view children when its size changes
+    ///
+    /// - Parameter oldSize: Old view size
+    public override func didChangeSize(_ oldSize: CGSize) {
+        super.didChangeSize(oldSize)
+        
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        
+        addSkills()
+    }
+    
+    /// Add skills to view
+    func addSkills() {
+        
+        removeAllChildren()
         
         /* Add every skill */
         for skill in skills {

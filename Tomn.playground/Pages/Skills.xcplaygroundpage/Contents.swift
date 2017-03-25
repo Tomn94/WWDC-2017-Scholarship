@@ -1,6 +1,6 @@
 //: [Previous](@previous)
 /*:
- - callout(Skills): I'm curious and I always want to discover new technologies. This helps me learn the following ones:
+ - callout(Skills): I'm curious and I always want to discover new technologies. This has helped me learn the following ones:
  */
 
 //#-hidden-code
@@ -10,7 +10,6 @@ import PlaygroundSupport
 
 let scene = SkillScene()
 //#-end-hidden-code
-
 //: Change physics
 scene.velocityFact = /*#-editable-code Change physics*/1/*#-end-editable-code*/
 
@@ -78,5 +77,4 @@ view.presentScene(scene)
 
 PlaygroundPage.current.liveView = view
 //#-end-hidden-code
-
 //: [Next](@next)
