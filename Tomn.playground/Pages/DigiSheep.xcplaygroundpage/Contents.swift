@@ -42,12 +42,12 @@ PlaygroundPage.current.liveView = mainView
 /* Background image */
 let background = UIImageView(image: #imageLiteral(resourceName: "bluemoon.jpg"))
 background.frame = mainView.frame
+background.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 mainView.addSubview(background)
 background.contentMode = .scaleAspectFill
 
 /* Title */
 let title = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height / 2.5))
-mainView.addSubview(title)
 title.numberOfLines = 0
 title.textAlignment = .center
 title.textColor = .white
@@ -82,8 +82,8 @@ let flash = UIView(frame: UIEdgeInsetsInsetRect(phone.bounds,
                                                              left: 10,
                                                              bottom: 30,
                                                              right: 10)))
-phone.addSubview(flash)
 flash.backgroundColor = .clear
+phone.addSubview(flash)
 
 /* Whole Phone */
 let app = UIImageView(image: UIImage(named: "digisheepPhone.png"))
@@ -93,7 +93,6 @@ phone.addSubview(app)
 /* Animations parameters */
 //#-end-hidden-code
 //: ### Adjust phone animation parameters
-
 //: Speed up animations
 let animationsSpeed = /*#-editable-code Boost animations*/1.0/*#-end-editable-code*/
 
@@ -109,7 +108,28 @@ let phoneVelocity: CGFloat = /*#-editable-code Change arriving speed*/6/*#-end-e
 let button = TicketScanButton(frame: CGRect(x: (frame.width - 290) / 2,
                                             y: frame.height * 2 / 3,
                                             width: 290, height: 42))
-mainView.addSubview(button)
+
+/* Layout */
+let container = UIView(frame: frame)
+mainView.addSubview(container)
+container.addSubview(title)
+container.addSubview(button)
+
+title.translatesAutoresizingMaskIntoConstraints = false
+container.addConstraints([NSLayoutConstraint(item: title, attribute: .centerX, relatedBy: .equal, toItem: container, attribute: .centerX, multiplier: 1, constant: 0),
+                          NSLayoutConstraint(item: title, attribute: .top, relatedBy: .equal, toItem: container, attribute: .topMargin, multiplier: 1, constant: 0)])
+
+button.translatesAutoresizingMaskIntoConstraints = false
+container.addConstraints([NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: container, attribute: .centerX, multiplier: 1, constant: 0),
+                          NSLayoutConstraint(item: button, attribute: .centerY, relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 50),
+                          NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 290),
+                          NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 42)])
+
+container.translatesAutoresizingMaskIntoConstraints = false
+mainView.addConstraints([NSLayoutConstraint(item: container, attribute: .centerX, relatedBy: .equal, toItem: mainView, attribute: .centerX, multiplier: 1, constant: 0),
+                         NSLayoutConstraint(item: container, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 430),
+                         NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 400),
+                         NSLayoutConstraint(item: container, attribute: .centerY, relatedBy: .equal, toItem: mainView, attribute: .centerY, multiplier: 1, constant: 0)])
 
 /* Set up animations */
 
@@ -135,5 +155,4 @@ UIView.animate(withDuration: 1.5 * animationsSpeed, delay: 0.5, options: [], ani
 }, completion: nil)
 
 //#-end-hidden-code
-
 //: [Next](@next)
