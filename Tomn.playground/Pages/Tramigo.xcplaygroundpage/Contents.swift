@@ -73,7 +73,7 @@ title.alpha = 0
 UIView.animate(withDuration: 1.5, delay: 0.25, options: [], animations: {
     title.alpha = 1
     title.frame.origin.y += 10
-}, completion: nil)
+})
 
 /* Content */
 hand.alpha = 0
@@ -83,7 +83,7 @@ UIView.animate(withDuration: 1.5, delay: 0.75, options: [], animations: {
     hand.alpha = 1
     description.alpha = 1
     description.frame.origin.y += 10
-}, completion: nil)
+})
 
 
 //: [Next](@next)
