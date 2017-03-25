@@ -38,13 +38,7 @@ title.attributedText = attrStr
 /* App in my own hand… */
 let hand = UIImageView(image: #imageLiteral(resourceName: "TramigoHand.png"))
 hand.contentMode = .scaleAspectFit
-hand.addConstraint(NSLayoutConstraint(item: hand,
-                                      attribute: .width,
-                                      relatedBy: .equal,
-                                      toItem: hand,
-                                      attribute: .height,
-                                      multiplier: 2579 / 3487,
-                                      constant: 0))
+hand.addConstraint(NSLayoutConstraint(item: hand, attribute: .width, relatedBy: .equal, toItem: hand, attribute: .height, multiplier: 2579 / 3487, constant: 0))
 
 /* Side Text */
 let description = UILabel()
@@ -67,6 +61,8 @@ hStack.spacing = 18
 let mainStack = UIStackView(arrangedSubviews: [title, hStack])
 mainStack.axis = .vertical
 mainStack.frame = view.frame
+mainStack.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+mainStack.distribution = .fillEqually
 mainStack.spacing = 30
 view.addSubview(mainStack)
 
