@@ -53,6 +53,7 @@ public class PopoverController: UIViewController, UIPopoverPresentationControlle
         
         let stackView = UIStackView(arrangedSubviews: [description, screenshot])
         stackView.axis = .vertical
+        stackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PopoverController.hidePopover)))
         
         self.view = stackView
         self.modalPresentationStyle = .popover
@@ -61,6 +62,10 @@ public class PopoverController: UIViewController, UIPopoverPresentationControlle
     
     public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+    
+    func hidePopover() {
+        dismiss(animated: true)
     }
     
 }
@@ -122,6 +127,14 @@ public class FeaturesView: UIView {
     
     var areFeaturesHidden = true
     
+    public var wiggleAngle: CGFloat = 0.059
+    
+    public var buttonMargins = UIEdgeInsets(top: -20, left: -20, bottom: -20, right: -20)
+    
+    public var maxButtonPlacementAttempt = 142
+    
+    public var buttonSize = CGSize(width: 42, height: 42)
+    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -143,7 +156,7 @@ public class FeaturesView: UIView {
         title.layer.shadowRadius  = 3
         title.layer.shadowOffset  = CGSize(width: 0, height: 0)
         title.layer.shadowOpacity = 0.4
-        title.autoresizingMask    = .flexibleWidth
+        title.autoresizingMask    = [.flexibleLeftMargin, .flexibleRightMargin]
         self.addSubview(title)
         
         //: ### Add cloud glyph in center
@@ -186,6 +199,7 @@ public class FeaturesView: UIView {
             let button = PopButton(frame: CGRect(origin: cloud.center, size: buttonsFrames[index].size))
             button.feature = feature
             button.mainController = viewController
+            button.isHidden = true
             
             buttons.append(button)
             self.addSubview(button)
@@ -202,8 +216,7 @@ public class FeaturesView: UIView {
         let cloudSize = CGSize(width: 300, height: 200)
         let titleHeight = title.frame.height
         let xUpperBound = UInt32(cloudSize.width * 1.2)
-        let yUpperBound = UInt32(center.y - (titleHeight * 1.2))
-        let margins = UIEdgeInsets(top: -20, left: -20, bottom: -20, right: -20)
+        let yUpperBound = UInt32(center.y - titleHeight)
         
         for _ in features {
             
@@ -211,14 +224,14 @@ public class FeaturesView: UIView {
             var attempts = 0
             repeat {
                 let x = center.x - cloudSize.width / 1.5 + CGFloat(arc4random_uniform(xUpperBound))
-                let y = titleHeight + CGFloat(arc4random_uniform(yUpperBound))
+                let y = 10 + titleHeight + CGFloat(arc4random_uniform(yUpperBound))
                 
-                newButtonFrame = CGRect(x: x, y: y, width: 42, height: 42)
+                newButtonFrame = CGRect(origin: CGPoint(x: x, y: y), size: buttonSize)
                 attempts += 1
                 
-            } while newButtonFrame.intersects(buttonsFramesWithInset) && attempts < 42
+            } while newButtonFrame.intersects(buttonsFramesWithInset) && attempts < maxButtonPlacementAttempt
             
-            buttonsFramesWithInset.append(UIEdgeInsetsInsetRect(newButtonFrame, margins))
+            buttonsFramesWithInset.append(UIEdgeInsetsInsetRect(newButtonFrame, buttonMargins))
             buttonsFrames.append(newButtonFrame)
         }
     }
@@ -227,26 +240,34 @@ public class FeaturesView: UIView {
         
         areFeaturesHidden = false
         
-        for (index, button) in self.buttons.enumerated() {
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
             
-            button.frame = CGRect(origin: cloud.center, size: buttonsFrames[index].size)
-            
-            UIView.animate(withDuration: 0.6, delay: 0.2 + TimeInterval(arc4random_uniform(10)) / 20, options: [.curveEaseIn], animations: {
-                button.frame = self.buttonsFrames[index]
-            }, completion: { _ in
+            for (index, button) in self.buttons.enumerated() {
                 
-                let animation = CAKeyframeAnimation(keyPath: "transform")
-                animation.autoreverses = true
-                animation.duration = 0.13
-                animation.repeatCount = Float.greatestFiniteMagnitude
+                button.isHidden = false
+                button.center = self.cloud.center
                 
-                let wiggleAngle: CGFloat = 0.059
-                let left  = NSValue(caTransform3D: CATransform3DMakeRotation(wiggleAngle, 0, 0, 1))
-                let right = NSValue(caTransform3D: CATransform3DMakeRotation(-wiggleAngle, 0, 0, 1))
-                animation.values = [left, right]
-                
-                button.layer.add(animation, forKey:"")
-            })
+                UIView.animate(withDuration: 0.6,
+                               delay: 0.2 + TimeInterval(arc4random_uniform(10)) / 20,
+                               options: [.curveEaseIn],
+                               animations: {
+                    
+                    button.frame = self.buttonsFrames[index]
+                    
+                }, completion: { _ in
+                    
+                    let animation = CAKeyframeAnimation(keyPath: "transform")
+                    animation.autoreverses = true
+                    animation.duration = 0.13
+                    animation.repeatCount = Float.greatestFiniteMagnitude
+                    
+                    let left  = NSValue(caTransform3D: CATransform3DMakeRotation(self.wiggleAngle, 0, 0, 1))
+                    let right = NSValue(caTransform3D: CATransform3DMakeRotation(-self.wiggleAngle, 0, 0, 1))
+                    animation.values = [left, right]
+                    
+                    button.layer.add(animation, forKey:"")
+                })
+            }
         }
     }
 
