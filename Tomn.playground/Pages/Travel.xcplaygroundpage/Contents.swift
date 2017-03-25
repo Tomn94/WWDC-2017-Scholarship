@@ -2,23 +2,22 @@
 /*:
  - callout(Travel): I like to discover the world, here is where I had the chance to live or visit
  */
-
 //#-hidden-code
 import MapKit
 import PlaygroundSupport
 //#-end-hidden-code
 
-//: Define the size of the flags
+/// Define the size of the flags
 let pinSize:             CGFloat = /*#-editable-code Define the size of the flags*/42/*#-end-editable-code*/
 
-//: Enter a number of seconds after which the map animation starts
+/// Enter a number of seconds after which the map animation starts
 let animationDelay: TimeInterval = /*#-editable-code Enter a number of seconds after which the map animation starts*/2/*#-end-editable-code*/
 
-//: Enter a plane speed multiplier
+/// Enter a plane speed multiplier
 let planeSpeed:     TimeInterval = /*#-editable-code Enter a plane speed multiplier*/1/*#-end-editable-code*/
 
-//: Displayed countries
-let countries: [MKAnnotation] = [/*#-editable-code Edit pins*/france, hongkong, macao, uk, ireland, germany, china, morocco, czech, belgium, italy, luxembourg, greece, spain, vietnam, myanmar, thailand, cambodia, japan/*#-end-editable-code*/]
+/// Displayed countries
+let countries:    [MKAnnotation] = [/*#-editable-code Edit pins*/france, hongkong, macao, uk, ireland, germany, china, morocco, czech, belgium, italy, luxembourg, greece, spain, vietnam, myanmar, thailand, cambodia, japan/*#-end-editable-code*/]
 
 //#-hidden-code
 
@@ -29,7 +28,8 @@ delegate.pinSize = pinSize
 let map = MKMapView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
 map.delegate = delegate
 //#-end-hidden-code
-map.mapType = /*#-editable-code Change map*/.satellite/*#-end-editable-code*/
+/// Change map type
+map.mapType = /*#-editable-code Change map type*/.satellite/*#-end-editable-code*/
 //#-hidden-code
 map.region = MKCoordinateRegionMake(france.coordinate,
                                     MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
