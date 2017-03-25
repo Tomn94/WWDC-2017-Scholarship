@@ -31,6 +31,7 @@ view.maxButtonPlacementAttempt = 142
 /// Margin between 2 icons
 view.buttonMargins = UIEdgeInsets(top: -20, left: -20, bottom: -20, right: -20)
 
+/// Features of Students’ Union app to display
 let features: [Feature] = [
     Feature(title: "News published by Unions", icon: #imageLiteral(resourceName: "su-newsIcon.png"), screenshot: #imageLiteral(resourceName: "su-newsScreen.png")),
     Feature(title: "Upcoming Events", icon: #imageLiteral(resourceName: "su-eventsIcon.png"), screenshot: #imageLiteral(resourceName: "su-eventsScreen.png")),
@@ -45,9 +46,9 @@ let features: [Feature] = [
     Feature(title: "Buildings Plan & Rooms List", icon: #imageLiteral(resourceName: "su-roomsIcon.png"), screenshot: #imageLiteral(resourceName: "su-roomsScreen.png")),
     Feature(title: "User Profile & Preferences", icon: #imageLiteral(resourceName: "su-userIcon.png"), screenshot: #imageLiteral(resourceName: "su-userScreen.png"))
 ]
-
 view.set(features, in: mainVC)
 
+/// Animate features apparition
 view.showFeatures()
 
 //: [Next](@next)
