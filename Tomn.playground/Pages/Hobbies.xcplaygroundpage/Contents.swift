@@ -1,6 +1,6 @@
 //: [Previous](@previous)
 /*:
- - callout(Also me): Apart from liking techn news and UI/UX design, I also play tennis and draw.
+ - callout(Also me): Apart from liking tech news and UI/UX design, I also play tennis and draw.
  */
 
 //#-hidden-code
@@ -10,18 +10,19 @@ import AVFoundation
 
 /// Main view
 let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
+view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
 //#-end-hidden-code
-//: Pictures to display as a slideshow
+/// Pictures to display as a slideshow
 let backgroundImages: [UIImage] = [/*#-editable-code Select pictures*/#imageLiteral(resourceName: "painting1.jpg"), #imageLiteral(resourceName: "painting2.jpg"), #imageLiteral(resourceName: "painting3.jpg"), #imageLiteral(resourceName: "painting4.jpg")/*#-end-editable-code*/]
 
-//: Time between 2 background pictures
+/// Time between 2 background pictures
 let rotationTime: TimeInterval = /*#-editable-code Adjust time*/3/*#-end-editable-code*/
 
-//: Picture shape of the bouncing balls for dynamics
+/// Picture shape of the bouncing balls for dynamics
 let imageShapeType: UIDynamicItemCollisionBoundsType = /*#-editable-code Select a picture shape*/.ellipse/*#-end-editable-code*/
 
-//: Change gravity force
+/// Change gravity force
 let gravityMagnitude: CGFloat = /*#-editable-code Change gravity*/5/*#-end-editable-code*/
 
 //#-hidden-code
@@ -31,6 +32,7 @@ var currentImageIndex = 0
 let backgroundImage = currentImageIndex < backgroundImages.count ? backgroundImages[currentImageIndex] : nil
 let imageView = UIImageView(image: backgroundImage)
 imageView.frame = view.frame
+imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 view.addSubview(imageView)
 imageView.contentMode = .scaleAspectFill
 
@@ -144,11 +146,10 @@ class BouncingImageView: UIImageView {
     }
 }
 //#-end-hidden-code
-
-//: Falling and bouncing images
+/// Falling and bouncing images
 let tennisImage = /*#-editable-code Choose a picture*/#imageLiteral(resourceName: "tennis.png")/*#-end-editable-code*/
 
-//: Size of the images
+/// Size of the images
 let ballSize = CGSize(width: /*#-editable-code Enter Width*/75/*#-end-editable-code*/, height: /*#-editable-code Enter Height*/75/*#-end-editable-code*/)
 
 //: Add colliding objects
@@ -163,30 +164,23 @@ let tennisBall2 = BouncingImageView(image: tennisImage)
 tennisBall2.frame = CGRect(origin: CGPoint(x: 342, y: 142), size: ballSize)
 view.addSubview(tennisBall2)
 //#-end-editable-code
-
-//: Uncomment to make it pop 😏🎾💥
+//: ## Uncomment to make it pop 😏🎾💥
 //#-editable-code
-//#-code-completion(everything, hide)
-//#-code-completion(identifier, show, ballParty(with: 30, size: ballSize))
-//#-code-completion(keyword, for)
-ballParty(with: 30, size: ballSize)
-/*#-end-editable-code*/
+//ballParty(with: 30, size: ballSize)
+//#-end-editable-code
 
-//: ## Add some gravity at first, then inertia, collisions…
+/* Add some gravity at first, then inertia, collisions… */
 addDynamics()
 
-//: ## Animate background
+/* Animate background */
 Timer.scheduledTimer(withTimeInterval: rotationTime, repeats: true) { _ in
     playSlideshow()
 }
 
-//: ## Load sound
+/* Load sound */
 audioPlayer.prepareToPlay()
 
 //#-hidden-code
-
-//: ## Configure playground
 PlaygroundPage.current.liveView = view
 //#-end-hidden-code
-
 //: [Next](@next)
