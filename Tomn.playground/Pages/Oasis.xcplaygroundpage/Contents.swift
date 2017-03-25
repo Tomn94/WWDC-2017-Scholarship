@@ -3,7 +3,7 @@
  - callout(Also in Students’ Union app): 1 year later, I added this other fruity game
  */
 
-//: Starts with 3 LP by default, but this can be played hardcore-style (0..<4)
+//: Between 0 and 5, starts with 3 LP by default, but this can also be played hardcore-style
 let startLives: Int = /*#-editable-code Choose the initial number of lives*/3/*#-end-editable-code*/
 //: Time interval probability between 2 items, decreases over time
 let spawnTimeProbability: UInt32 = /*#-editable-code Decrease to play faster*/50/*#-end-editable-code*/
@@ -20,7 +20,7 @@ let loseLife: [String] = [/*#-editable-code Edit or Add different kinds of Bombs
 //: Probability that certain types appear
 let bonusProbability: UInt32 = /*#-editable-code Probability out of 100 the object that appears is a bonus*/2/*#-end-editable-code*/
 let specialProbability: UInt32 = /*#-editable-code Probability out of 100 the object that appears is a special fruit*/10/*#-end-editable-code*/
-let bombInitialProbability: UInt32 = /*#-editable-code Probability out of 100 the object that appears is a bomb*/10/*#-end-editable-code*/
+let bombInitialProbability: UInt32 = /*#-editable-code Probability out of 100 the object that appears is a bomb*/15/*#-end-editable-code*/
 
 //#-hidden-code
 
@@ -28,12 +28,13 @@ import PlaygroundSupport
 import UIKit
 import SpriteKit
 
-let frameSize = CGSize(width: 500, height: 500)
+let frameSize = CGSize(width: 432, height: 624)
+
 let scene = FruitsGameScene(size: frameSize)
 scene.fruits = fruits
 scene.specialFruits = specials
 scene.loseLife = loseLife
-scene.scaleMode = .aspectFill
+scene.scaleMode = .aspectFit
 scene.startLives = startLives
 scene.spawnTimeProbability = spawnTimeProbability
 scene.bonusProbability = bonusProbability * 2
@@ -48,5 +49,4 @@ view.presentScene(scene)
 
 PlaygroundPage.current.liveView = view
 //#-end-hidden-code
-
 //: [Next](@next)
