@@ -1,6 +1,6 @@
 //: [Previous](@previous)
 /*:
- - callout(Travel): I like to discover the world, here is where I had the chance to live or visit
+ - callout(Travel): I like to **discover** the world, here is where I had the chance to live or visit
  */
 //#-hidden-code
 import MapKit
