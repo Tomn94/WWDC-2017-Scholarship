@@ -3,18 +3,20 @@
  - callout(Also in Students’ Union app): 1 year later, I added this other fruity game
  */
 
-//: Between 0 and 5, starts with 3 LP by default, but this can also be played hardcore-style
+/// Starts with 3 LP by default, must be 5 maximum,
+/// but this can also be played hardcore-style at 0 the minimum
 let startLives: Int = /*#-editable-code Choose the initial number of lives*/3/*#-end-editable-code*/
-//: Time interval probability between 2 items, decreases over time
+
+/// Time interval probability between 2 items, decreases over time
 let spawnTimeProbability: UInt32 = /*#-editable-code Decrease to play faster*/50/*#-end-editable-code*/
 
-//: Choose Fruits that appear
+/// Choose Fruits that appear
 let fruits: [String] = [/*#-editable-code Choose fruits that appear*/"🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍈", "🍒", "🍑", "🍍", "🍆"/*#-end-editable-code*/]
 
-//: Customize Bonuses
+/// Customize Bonuses
 let specials: [String] = [/*#-editable-code Customize your own bonuses*/"🌮", "🌯", "🍗", "🍕", "🍔", "🍟"/*#-end-editable-code*/]
 
-//: Edit or Add different kinds of Bombs
+/// Edit or Add different kinds of Bombs
 let loseLife: [String] = [/*#-editable-code Edit or Add different kinds of Bombs*/"💣"/*#-end-editable-code*/]
 
 //: Probability that certain types appear
