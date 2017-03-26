@@ -1,5 +1,5 @@
 /*:
- - callout(Skills): I'm curious and I always want to discover new technologies. This has helped me learn the following ones:
+ - callout(Skills): I'm **curious** and I always want to **discover** new technologies. This has helped me learn the following ones…
  */
 
 //#-hidden-code

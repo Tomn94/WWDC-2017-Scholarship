@@ -1,6 +1,6 @@
 /*:
- - callout(A Look at My Projects): I created an app connected to an online ticketing system for events at my school.\
-     The one on the background is La Blue Moon with 2,700 students.
+ - callout(A Look at My Projects): I created an app connected to an **online ticketing system** for events at my school.\
+     The one on the background is *La Blue Moon* with **2,700 students**.
  */
 
 //#-hidden-code

@@ -1,5 +1,5 @@
 /*:
- - callout(Also in Students’ Union app): I made this hidden game for students
+ - callout(Also in Students’ Union app): I made this hidden game for students, which is my **1st game**
  */
 /*:
  - note: Tilt your device to drive the ship (or swipe)\

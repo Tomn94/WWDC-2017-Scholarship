@@ -1,5 +1,5 @@
 /*:
- - callout(Also me): Apart from liking tech news and UI/UX design, I also play tennis and draw.
+ - callout(Also me): Apart from being fond of **tech news** and **UI/UX design**, I also play **tennis** and **draw**.
  */
 
 //#-hidden-code
