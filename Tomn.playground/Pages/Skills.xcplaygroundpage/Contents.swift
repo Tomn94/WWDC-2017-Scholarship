@@ -11,6 +11,9 @@ let scene = SkillScene()
 //#-end-hidden-code
 //: Change physics
 scene.velocityFact = /*#-editable-code Change physics*/1/*#-end-editable-code*/
+/*:
+ - note: Sweep the bubbles to make them move
+ */
 
 //: Edit skills bubbles, their importance, and the text size inside. Comment one to hide it from the view
 //#-editable-code
