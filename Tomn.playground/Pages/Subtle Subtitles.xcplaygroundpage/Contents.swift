@@ -1,4 +1,3 @@
-//: [Previous](@previous)
 /*:
  - callout(A Look at My Projects): My last app released on the App Store (and soon more, currently in development!)
  */
@@ -296,5 +295,3 @@ play()
 
 PlaygroundPage.current.liveView = mainView
 //#-end-hidden-code
-
-//: [Next](@next)

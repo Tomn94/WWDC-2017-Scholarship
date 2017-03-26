@@ -1,4 +1,3 @@
-//: [Previous](@previous)
 /*:
  - callout(Also in Students’ Union app): 1 year later, I added this other fruity game
  */
@@ -51,4 +50,3 @@ view.presentScene(scene)
 
 PlaygroundPage.current.liveView = view
 //#-end-hidden-code
-//: [Next](@next)

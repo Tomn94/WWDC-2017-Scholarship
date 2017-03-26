@@ -1,4 +1,3 @@
-//: [Previous](@previous)
 /*:
  - callout(Skills): I'm curious and I always want to discover new technologies. This has helped me learn the following ones:
  */
@@ -77,4 +76,3 @@ view.presentScene(scene)
 
 PlaygroundPage.current.liveView = view
 //#-end-hidden-code
-//: [Next](@next)

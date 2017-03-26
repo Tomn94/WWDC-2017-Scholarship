@@ -128,5 +128,3 @@ PlaygroundPage.current.liveView = view
 //#-end-hidden-code
 //: At launch, rotates the avatar a bit, indicating it can be further spinned by the user
 view.runSpinningHintAnimation()
-
-//: [Next](@next)

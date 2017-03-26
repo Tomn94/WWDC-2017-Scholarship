@@ -1,4 +1,3 @@
-//: [Previous](@previous)
 /*:
  - callout(Travel): I like to **discover** the world, here is where I had the chance to live or visit
  */
@@ -77,5 +76,3 @@ Timer.scheduledTimer(withTimeInterval: animationDelay + 9, repeats: false) { _ i
     map.showAnnotations(countries, animated: true)
 }
 //#-end-hidden-code
-
-//: [Next](@next)

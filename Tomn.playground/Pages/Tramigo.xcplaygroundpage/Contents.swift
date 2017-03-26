@@ -1,4 +1,3 @@
-//: [Previous](@previous)
 /*:
  - callout(A Look at My Projects): My **first app on the App Store**, now considering making it a **start-up**
  */
@@ -84,6 +83,3 @@ UIView.animate(withDuration: 1.5, delay: 0.75, options: [], animations: {
     description.alpha = 1
     description.frame.origin.y += 10
 })
-
-
-//: [Next](@next)

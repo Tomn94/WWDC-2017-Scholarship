@@ -1,4 +1,3 @@
-//: [Previous](@previous)
 /*:
  - callout(Also me): Apart from liking tech news and UI/UX design, I also play tennis and draw.
  */
@@ -183,4 +182,3 @@ audioPlayer.prepareToPlay()
 //#-hidden-code
 PlaygroundPage.current.liveView = view
 //#-end-hidden-code
-//: [Next](@next)

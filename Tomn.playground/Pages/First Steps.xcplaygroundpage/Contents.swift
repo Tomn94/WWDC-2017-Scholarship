@@ -1,4 +1,3 @@
-//: [Previous](@previous)
 /*:
  - callout(Let's Take a Look at My Projects): Here is a look at my **first projects using Apple technologies**
  */
@@ -153,5 +152,3 @@ musicTweetImage.setUpParallax(tiltFact: tiltFact, shadowFact: shadowFact, panFac
 //#-editable-code Free code zone
 
 //#-end-editable-code
-
-//: [Next](@next)

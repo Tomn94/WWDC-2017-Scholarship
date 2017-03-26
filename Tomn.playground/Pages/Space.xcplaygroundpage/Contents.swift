@@ -1,4 +1,3 @@
-//: [Previous](@previous)
 /*:
  - callout(Also in Students’ Union app): I made this hidden game for students
  */
@@ -74,4 +73,3 @@ view.presentScene(scene)
 PlaygroundPage.current.liveView = view
 
 //#-end-hidden-code
-//: [Next](@next)
