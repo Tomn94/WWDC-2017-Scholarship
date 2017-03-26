@@ -1,42 +1,63 @@
 import UIKit
 
-/// <#Description#>
+/// Main View for DigiSheep page
 public class DSView: UIView {
     
-    static let contentFrame = CGRect(x: 0, y: 0, width: 430, height: 500)
+    // MARK: Constants
     
-    static let phoneSize = CGSize(width: 174, height: 350)
+    /// Inner frame size containing Title & Button
+    public static let contentFrame = CGRect(x: 0, y: 0, width: 430, height: 304)
     
-    static let ticketSize = CGSize(width: 282, height: 100)
+    /// Phone (app image, flash) size
+    public static let phoneSize = CGSize(width: 174, height: 350)
     
+    /// Ticket size
+    public static let ticketSize = CGSize(width: 282, height: 100)
+    
+    
+    // MARK: Subviews
+    
+    /// Animated Ticket
+    let ticket = UIImageView(image: #imageLiteral(resourceName: "ticket.png"))
+    
+    /// Title label on top of the view
+    let title = UILabel()
+    
+    /// Button launching Ticket & Phone animations
+    var button: DSTicketScanButton?
+    
+    /// Animated phone container after tapping button
+    let phone = UIView()
+    
+    /// Phone & DigiSheep app image
+    let app = UIImageView(image: #imageLiteral(resourceName: "digisheepPhone.png"))
+    
+    /// Flashing screen of the phone
+    let flash = UIView()
+    
+    
+    // MARK: Animation variables
+    
+    /// Speed up animations
+    public var animationsSpeed = 1.0
+    
+    /// Adjust Phone spring effect
+    public var phoneDamping: CGFloat = 0.6
+    
+    /// Change Phone arriving speed
+    public var phoneVelocity: CGFloat = 6
+    
+    // MARK: Constants
+    /* Phone frames for each state during animation */
     var phoneInitial = CGRect.zero
     var phoneMid = CGRect.zero
     var phoneFinal = CGRect.zero
     
+    /* Ticket frames for each state during animation */
     var ticketInitial = CGRect.zero
     var ticketMid = CGRect.zero
     var ticketFinal = CGRect.zero
     
-    let ticket = UIImageView(image: #imageLiteral(resourceName: "ticket.png"))
-    
-    var button: DSTicketScanButton?
-    
-    let title = UILabel()
-    
-    let phone = UIView()
-    
-    let flash = UIView()
-    
-    let app = UIImageView(image: #imageLiteral(resourceName: "digisheepPhone.png"))
-    
-    /// Speed up animations
-    let animationsSpeed = 1.0
-    
-    /// Adjust Phone spring effect
-    let phoneDamping: CGFloat = 0.6
-    
-    /// Change Phone arriving speed
-    let phoneVelocity: CGFloat = 6
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,15 +84,12 @@ public class DSView: UIView {
         attrStr.addAttributes([NSFontAttributeName : UIFont.systemFont(ofSize: 24.5)],   range: NSRange(31..<57))
         title.attributedText = attrStr
         
-        
         /* Fire button */
         button = DSTicketScanButton(frame: CGRect(x: (frame.width - 290) / 2,
                                                   y: frame.height * 2 / 3,
                                                   width: 290, height: 42))
         
-        
-        
-        /* Layout */
+        /* Title & Button Layout */
         let container = UIView(frame: DSView.contentFrame)
         self.addSubview(container)
         container.addSubview(title)
@@ -93,23 +111,22 @@ public class DSView: UIView {
                              NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 400),
                              NSLayoutConstraint(item: container, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 430)])
         
-        
         /* Ticket to be scanned */
-        self.addSubview(ticket)
         ticket.layer.shadowColor = UIColor.black.cgColor
         ticket.layer.shadowRadius = 5
         ticket.layer.shadowOpacity = 1
         ticket.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
-        /* Scanning Phone */
-        self.addSubview(phone)
+        self.addSubview(ticket)
         
         /* Flashing Phone Screen */
         flash.backgroundColor = .clear
         phone.addSubview(flash)
         
-        /* Whole Phone */
+        /* Phone screen */
         phone.addSubview(app)
+        
+        /* Scanning Phone container */
+        self.addSubview(phone)
         
         /* Set up animations */
         button?.phone  = phone
@@ -117,77 +134,80 @@ public class DSView: UIView {
         button?.flash  = flash
         
         button?.animationSpeed = animationsSpeed
-        button?.phoneDamping = phoneDamping
-        button?.phoneVelocity = phoneVelocity
+        button?.phoneDamping   = phoneDamping
+        button?.phoneVelocity  = phoneVelocity
         
-        placePhone()
+        /* Set up layout for Phone & Ticket */
+        placePhoneTicket()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Place views upon screen change
     override public func layoutSubviews() {
         super.layoutSubviews()
         
-        placePhone()
+        placePhoneTicket()
     }
     
-    public func placePhone() {
+    /// Place Phone & Ticket according to screen size
+    public func placePhoneTicket() {
         
-        /* Variables */
+        /* Compute variables for each animation state */
         phoneInitial = CGRect(origin: CGPoint(x: -DSView.phoneSize.height,
                                               y: frame.height + DSView.phoneSize.width),
                               size: DSView.phoneSize)
-        phoneMid = CGRect(origin: CGPoint(x: (frame.width - DSView.phoneSize.width) / 2,
-                                          y: frame.height - DSView.phoneSize.height + 50),
-                          size: DSView.phoneSize)
-        phoneFinal = CGRect(origin: CGPoint(x: frame.width + DSView.phoneSize.height,
-                                            y: frame.height + DSView.phoneSize.width),
-                            size: DSView.phoneSize)
+        phoneMid     = CGRect(origin: CGPoint(x: (frame.width - DSView.phoneSize.width) / 2,
+                                              y: frame.height - DSView.phoneSize.height + 50),
+                              size: DSView.phoneSize)
+        phoneFinal   = CGRect(origin: CGPoint(x: frame.width  + DSView.phoneSize.height,
+                                              y: frame.height + DSView.phoneSize.width),
+                              size: DSView.phoneSize)
         
         ticketInitial = CGRect(origin: CGPoint(x: frame.width * 2.5,
                                                y: phoneMid.origin.y + (phoneMid.height / 3)),
                                size: DSView.ticketSize)
-        ticketMid = CGRect(origin: CGPoint(x: phoneMid.origin.x + (phoneMid.width / 4.5),
-                                           y: ticketInitial.origin.y),
-                           size: DSView.ticketSize)
-        ticketFinal = CGRect(origin: CGPoint(x: -ticketInitial.origin.x,
-                                             y: ticketInitial.origin.y),
-                             size: DSView.ticketSize)
+        ticketMid     = CGRect(origin: CGPoint(x: phoneMid.origin.x + (phoneMid.width / 4.5),
+                                               y: ticketInitial.origin.y),
+                               size: DSView.ticketSize)
+        ticketFinal   = CGRect(origin: CGPoint(x: -ticketInitial.origin.x,
+                                               y: ticketInitial.origin.y),
+                               size: DSView.ticketSize)
         
-        /* Apply computations */
+        /* Apply computations for Initial state */
         phone.transform = .identity
-        phone.frame = phoneInitial
-        
-        flash.frame = UIEdgeInsetsInsetRect(phone.bounds,
-                                            UIEdgeInsets(top: 30,
-                                                         left: 10,
-                                                         bottom: 30,
-                                                         right: 10))
-        
-        app.frame = phone.bounds
+        phone.frame     = phoneInitial
+        app.frame       = phone.bounds
+        flash.frame     = UIEdgeInsetsInsetRect(phone.bounds,
+                                                UIEdgeInsets(top: 30,
+                                                             left: 10,
+                                                             bottom: 30,
+                                                             right: 10))
         
         ticket.frame = ticketInitial
         
+        /* Update computations for animation handled by button */
         button?.ticketInitial = ticketInitial
-        button?.ticketMid = ticketMid
-        button?.ticketFinal = ticketFinal
+        button?.ticketMid     = ticketMid
+        button?.ticketFinal   = ticketFinal
         
-        button?.phoneInitial = phoneInitial
-        button?.phoneMid = phoneMid
-        button?.phoneFinal = phoneFinal
+        button?.phoneInitial  = phoneInitial
+        button?.phoneMid      = phoneMid
+        button?.phoneFinal    = phoneFinal
     }
     
+    /// Show Title & Button
     public func showContent() {
         
-        button?.alpha = 0
         title.alpha = 0
+        button?.alpha = 0
         UIView.animate(withDuration: 1.5 * animationsSpeed, delay: 0.5, options: [], animations: {
             self.title.alpha = 1
             self.title.frame.origin.y += 10
             self.button?.alpha = 1
-        }, completion: nil)
+        })
     }
     
 }
