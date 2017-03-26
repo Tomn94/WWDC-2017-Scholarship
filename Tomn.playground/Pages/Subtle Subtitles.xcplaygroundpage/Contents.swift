@@ -19,7 +19,7 @@ let script = [
               "Helps learning a foreign language",
               "Customizable",
               "Subtitles File Parser",
-              "Supports AirDrop & iCloud Drive\n\nto transfer subtitles to friends\nor between iOS/macOS devices"
+              "Supports AirDrop & iCloud Drive\n\nto share subtitles with friends\nor between iOS/macOS devices"
 //#-end-editable-code
              ]
 
