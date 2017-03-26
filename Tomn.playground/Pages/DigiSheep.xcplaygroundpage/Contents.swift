@@ -146,6 +146,7 @@ public class DSView: UIView {
     
     public func placePhone() {
         
+        /* Variables */
         phoneInitial = CGRect(origin: CGPoint(x: -phoneSize.height,
                                               y: frame.height + phoneSize.width),
                               size: phoneSize)
@@ -166,6 +167,8 @@ public class DSView: UIView {
                                              y: ticketInitial.origin.y),
                              size: ticketSize)
         
+        /* Apply computations */
+        phone.transform = .identity
         phone.frame = phoneInitial
         
         flash.frame = UIEdgeInsetsInsetRect(phone.bounds,
