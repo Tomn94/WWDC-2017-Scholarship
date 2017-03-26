@@ -138,7 +138,7 @@ vStack.axis = stackViewAxis
 vStack.distribution = .fillProportionally
 vStack.spacing = stackViewAxis == .vertical ? 50 : 10
 let insets: CGFloat = stackViewAxis == .vertical ? 30 : 25
-vStack.frame = UIEdgeInsetsInsetRect(view.frame, UIEdgeInsets(top: insets, left: insets, bottom: insets, right: insets))
+vStack.frame = UIEdgeInsetsInsetRect(view.frame, UIEdgeInsets(top: insets, left: insets, bottom: insets * 2, right: insets))
 vStack.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 view.addSubview(vStack)
 
