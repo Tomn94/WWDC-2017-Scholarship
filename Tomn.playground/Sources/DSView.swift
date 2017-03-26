@@ -108,8 +108,8 @@ public class DSView: UIView {
         container.translatesAutoresizingMaskIntoConstraints = false
         self.addConstraints([NSLayoutConstraint(item: container, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0),
                              NSLayoutConstraint(item: container, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0),
-                             NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 400),
-                             NSLayoutConstraint(item: container, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 430)])
+                             NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: DSView.contentFrame.width),
+                             NSLayoutConstraint(item: container, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: DSView.contentFrame.height)])
         
         /* Ticket to be scanned */
         ticket.layer.shadowColor = UIColor.black.cgColor
