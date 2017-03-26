@@ -51,7 +51,6 @@ let title = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.
 title.numberOfLines = 0
 title.textAlignment = .center
 title.textColor = .white
-title.alpha = 0
 title.layer.shadowColor = UIColor.black.cgColor
 title.layer.shadowRadius = 10
 title.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -131,6 +130,8 @@ mainView.addConstraints([NSLayoutConstraint(item: container, attribute: .centerX
                          NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 400),
                          NSLayoutConstraint(item: container, attribute: .centerY, relatedBy: .equal, toItem: mainView, attribute: .centerY, multiplier: 1, constant: 0)])
 
+mainView.bringSubview(toFront: phone)
+
 /* Set up animations */
 
 button.phone = phone
@@ -149,9 +150,12 @@ button.phoneInitial = phoneInitial
 button.phoneMid = phoneMid
 button.phoneFinal = phoneFinal
 
+button.alpha = 0
+title.alpha = 0
 UIView.animate(withDuration: 1.5 * animationsSpeed, delay: 0.5, options: [], animations: {
     title.alpha = 1
     title.frame.origin.y += 10
+    button.alpha = 1
 }, completion: nil)
 
 //#-end-hidden-code
