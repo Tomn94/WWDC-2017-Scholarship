@@ -6,6 +6,8 @@
 	<string>1.0</string>
 	<key>ContentVersion</key>
 	<string>1.0</string>
+	<key>SwiftVersion</key>
+	<string>3.1</string>
 	<key>Name</key>
 	<string>Tomn</string>
 	<key>ContentIdentifier</key>
@@ -17,6 +19,8 @@
 	<key>Chapters</key>
 	<array>
 		<string>Chapter1.playgroundchapter</string>
+		<string>Chapter2.playgroundchapter</string>
+		<string>Chapter3.playgroundchapter</string>
 	</array>
 </dict>
 </plist>

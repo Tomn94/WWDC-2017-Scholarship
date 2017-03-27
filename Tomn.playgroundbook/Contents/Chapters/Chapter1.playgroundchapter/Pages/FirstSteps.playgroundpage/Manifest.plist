@@ -5,11 +5,12 @@
 	<key>Version</key>
 	<string>1.0</string>
 	<key>Name</key>
-	<string>Hello World</string>
-	<key>Pages</key>
-	<array>
-		<string>Me.playgroundpage</string>
-		<string>Travel.playgroundpage</string>
-	</array>
+	<string>👶🏼 First Steps</string>
+	<key>LiveViewMode</key>
+	<string>VisibleByDefault</string>
+	<key>LiveViewEdgeToEdge</key>
+	<true/>
+	<key>PlaygroundLoggingMode</key>
+	<string>Off</string>
 </dict>
 </plist>
