@@ -20,16 +20,18 @@ let countries:    [MKAnnotation] = [/*#-editable-code Edit pins*/france, hongkon
 
 //#-hidden-code
 
+/// Enable caching to disk. Activate to create offline cache
+let createCache = false
+
 //: ## Create the map (main view)
+let map = MKMapView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
 /// Strong reference to the map view delegate
 let delegate = MapDelegate()
+delegate.cacheTiles = createCache
+delegate.map = map
 delegate.pinSize = pinSize
-let map = MKMapView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
+delegate.reloadTiles()
 map.delegate = delegate
-//#-end-hidden-code
-/// Change map type
-map.mapType = /*#-editable-code Change map type*/.satellite/*#-end-editable-code*/
-//#-hidden-code
 map.region = MKCoordinateRegionMake(france.coordinate,
                                     MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
 

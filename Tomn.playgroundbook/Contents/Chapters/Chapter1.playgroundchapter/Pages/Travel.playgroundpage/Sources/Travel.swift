@@ -1,5 +1,6 @@
 import UIKit
 import MapKit
+import PlaygroundSupport
 
 /// Converts an emoji character to an image,
 /// in order to use it as a map pin
@@ -42,11 +43,107 @@ public class Annotation: NSObject, MKAnnotation {
     }
 }
 
+/// Tile overlay supporting offline mode.
+/// Loads tiles from disk, if not cached uses Apple Maps API and writes the result to disk if `caching` is activated.
+class OfflineTileOverlay: MKTileOverlay {
+    
+    /// API to get the files from.
+    /// Should containt `%d` respectively for z, x, y
+    static let tileAPIURL = "https://cdn1.apple-mapkit.com/tp/tile?type=tile&size=1&lang=en&imageFormat=jpg&vendorkey=38da783db1ef0c2d9f8e783a063ffcdc6a6330fe&z=%d&x=%d&y=%d"
+    
+    /// Cache path
+    static let cacheFolder = Bundle.main.url(forResource: "avatar", withExtension: "jpg")?.deletingLastPathComponent()
+                              ?? playgroundSharedDataDirectory.appendingPathComponent("tiles", isDirectory: true)
+    
+    /// Allow writing tiles to disk for caching (reading is always on)
+    var cacheTiles = false
+    
+    /// Destination for writing cache to disk.
+    /// In ~/Documents/Shared Playground Data/ on macOS
+    static let cacheWriteDestination = playgroundSharedDataDirectory.appendingPathComponent("tiles", isDirectory: true)
+                            // Bundle.main.url(forResource: "avatar", withExtension: "jpg")?.deletingLastPathComponent()
+    
+    /// URL to get the tile from
+    ///
+    /// - Parameter path: Tile position and zoom level
+    /// - Returns: URL to get the tile data
+    override func url(forTilePath path: MKTileOverlayPath) -> URL {
+        return URL(string: String(format: OfflineTileOverlay.tileAPIURL, path.z, path.x, path.y))!
+    }
+    
+    /// Load tile from cache, or API and eventually cache it
+    ///
+    /// - Parameters:
+    ///   - path: Tile position and zoom level
+    ///   - result: tile raw data and eventual error
+    override func loadTile(at path: MKTileOverlayPath,
+                           result: @escaping (Data?, Error?) -> Void) {
+        
+        /* Get cached tile path */
+        let filePath = OfflineTileOverlay.cacheFolder.appendingPathComponent(String(format: "tile-%d-%d-%d.jpg", path.z, path.x, path.y))
+        
+        if FileManager.default.fileExists(atPath: filePath.path) {
+            
+            /* If cached, read from disk */
+            do {
+                let data = try Data(contentsOf: filePath)
+                result(data, nil)
+            } catch {
+                result(nil, nil)
+                print("Error while loading tile at path:" + filePath.path)
+            }
+            
+        } else {
+            
+            /* If not cached, get tile URL back */
+            let request = URLRequest(url: url(forTilePath: path))
+            
+            /* Launch data request */
+            let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
+            let dataTask = session.dataTask(with: request, completionHandler: { [weak self] data, resp, error in
+                
+                /* If we got data, cache it */
+                if let strongSelf = self,
+                   strongSelf.cacheTiles,
+                   let data = data {
+                    do {
+                        let filePath = OfflineTileOverlay.cacheWriteDestination.appendingPathComponent(String(format: "tile-%d-%d-%d.jpg", path.z, path.x, path.y))
+                        try data.write(to: filePath)
+                    } catch {
+                        print("Error while writing tile to disk:" + filePath.path)
+                    }
+                    /*DispatchQueue.global(qos: .background).async {
+                    }*/
+                }
+                
+                /* Give data back to the handler */
+                result(data, error)
+            })
+            dataTask.resume()
+        }
+    }
+    
+}
+
 /// Helps setting up the map view
 public class MapDelegate: NSObject, MKMapViewDelegate {
     
+    
     /// Size of all the annotations on the map
     public var pinSize: CGFloat = 42
+    
+    
+    /// Offline map tile overlay
+    var tileOverlay: OfflineTileOverlay?
+    
+    /// Map view associated to this delegate
+    public var map: MKMapView?
+    
+    /// Allow writing tiles to disk for caching (reading is always on)
+    public var cacheTiles = false
+    
+    
+    // MARK: Annotations
     
     /// Configures the pins on the map with their icon
     ///
@@ -57,6 +154,7 @@ public class MapDelegate: NSObject, MKMapViewDelegate {
     public func mapView(_ mapView: MKMapView,
                  viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
+        /* Custom annotation from emoji */
         let view = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
         view.image = image(from: (annotation as! Annotation).pin,
                            size: pinSize)
@@ -65,9 +163,58 @@ public class MapDelegate: NSObject, MKMapViewDelegate {
         return view
     }
     
+    
+    // MARK: Overlay
+    
+    /// Basic rendering configuration for the overlay
+    ///
+    /// - Parameters:
+    ///   - mapView: Map view to draw the overlay on
+    ///   - overlay: Overlay to be displayed
+    /// - Returns: The overlay renderer for a given tile overlay type
+    public func mapView(_ mapView: MKMapView,
+                        rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        
+        guard let tileOverlay = overlay as? MKTileOverlay else {
+            return MKOverlayRenderer()
+        }
+        
+        /* Offline tyle overlay renderer */
+        return MKTileOverlayRenderer(tileOverlay: tileOverlay)
+    }
+    
+    /// Setup offline map overlay
+    public func reloadTiles() {
+        
+        guard let map = map else { return }
+        
+        /* Erase any previous tile */
+        if self.tileOverlay != nil {
+            map.remove(self.tileOverlay!)
+        }
+        
+        /* Create cache directory if doesn't exist */
+        let fileManager = FileManager.default
+        var isDir: ObjCBool = true
+        if !fileManager.fileExists(atPath: OfflineTileOverlay.cacheFolder.path, isDirectory: &isDir) {
+            
+            do {
+                try fileManager.createDirectory(at: OfflineTileOverlay.cacheFolder, withIntermediateDirectories: true)
+            } catch {
+                print("Error while creating cache folder")
+            }
+        }
+        
+        /* Create the map overlay, replacing MapKit original one */
+        self.tileOverlay = OfflineTileOverlay()
+        self.tileOverlay?.cacheTiles = self.cacheTiles
+        self.tileOverlay?.canReplaceMapContent = true
+        map.insert(self.tileOverlay!, at: MKOverlayLevel.aboveLabels.rawValue)
+    }
+    
 }
 
-//: ## Create pins
+/* Create pins */
 public let france = Annotation(at: CLLocationCoordinate2D(latitude: 47.493404, longitude: -0.550958),
                         title: "Angers, France", subtitle: "My Engineering School 🎓",
                         pin: "🇫🇷")
