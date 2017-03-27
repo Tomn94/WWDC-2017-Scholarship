@@ -1,6 +1,8 @@
 import UIKit
 import MapKit
+#if !os(iOS)
 import PlaygroundSupport
+#endif
 
 /// Converts an emoji character to an image,
 /// in order to use it as a map pin
@@ -52,16 +54,25 @@ class OfflineTileOverlay: MKTileOverlay {
     static let tileAPIURL = "https://cdn1.apple-mapkit.com/tp/tile?type=tile&size=1&lang=en&imageFormat=jpg&vendorkey=38da783db1ef0c2d9f8e783a063ffcdc6a6330fe&z=%d&x=%d&y=%d"
     
     /// Cache path
+#if os(iOS)
     static let cacheFolder = Bundle.main.url(forResource: "avatar", withExtension: "jpg")?.deletingLastPathComponent()
+                              ?? URL(fileURLWithPath: "")
+#else
+    static let cacheFolder = Bundle.main.url(forResource: "avatar", withExtension: "jpg")!.deletingLastPathComponent()
                               ?? playgroundSharedDataDirectory.appendingPathComponent("tiles", isDirectory: true)
+#endif
     
     /// Allow writing tiles to disk for caching (reading is always on)
     var cacheTiles = false
     
     /// Destination for writing cache to disk.
     /// In ~/Documents/Shared Playground Data/ on macOS
+#if os(iOS)
+    static let cacheWriteDestination = Bundle.main.url(forResource: "avatar", withExtension: "jpg")?.deletingLastPathComponent()
+                                        ?? URL(fileURLWithPath: "")
+#else
     static let cacheWriteDestination = playgroundSharedDataDirectory.appendingPathComponent("tiles", isDirectory: true)
-                            // Bundle.main.url(forResource: "avatar", withExtension: "jpg")?.deletingLastPathComponent()
+#endif
     
     /// URL to get the tile from
     ///
