@@ -6,6 +6,7 @@
 //#-hidden-code
 import UIKit
 import SceneKit
+import AVFoundation
 import PlaygroundSupport
 //#-end-hidden-code
 
@@ -124,7 +125,15 @@ pan.cancelsTouchesInView = true
 view.addGestureRecognizer(pan)
 view.isUserInteractionEnabled = true
 
+/// Background sound file URL
+let music = URL(fileURLWithPath: Bundle.main.path(forResource: "Intro", ofType: "m4a")!)
+/// Sound player
+let audioPlayer = try AVAudioPlayer(contentsOf: music)
+
 PlaygroundPage.current.liveView = view
 //#-end-hidden-code
+//: Play background music
+audioPlayer.play()
+
 //: At launch, rotates the avatar a bit, indicating it can be further spinned by the user
 view.runSpinningHintAnimation()
