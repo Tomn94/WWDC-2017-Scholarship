@@ -78,7 +78,7 @@ Timer.scheduledTimer(withTimeInterval: animationDelay + 9, repeats: false) { _ i
     map.showAnnotations(countries, animated: true)
 }
 
-/* Lets me know which tiles I need to set offline for an iPad Air 2 9,7” viewport
+/* Lets me know which tiles I need to set offline for an iPad Air 2 9.7” viewport
 Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { _ in
     var tilesNeeded = ""
     for tile in tilesNumbersNeededForiPad97Inches {
