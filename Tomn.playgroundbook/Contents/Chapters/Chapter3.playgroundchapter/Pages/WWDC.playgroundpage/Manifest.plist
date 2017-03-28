@@ -5,12 +5,12 @@
 	<key>Version</key>
 	<string>1.0</string>
 	<key>Name</key>
-	<string>Looking Forward</string>
-	<key>Pages</key>
-	<array>
-		<string>Skills.playgroundpage</string>
-		<string>Hobbies.playgroundpage</string>
-		<string>WWDC.playgroundpage</string>
-	</array>
+	<string>👾 WWDC</string>
+	<key>LiveViewMode</key>
+	<string>VisibleByDefault</string>
+	<key>LiveViewEdgeToEdge</key>
+	<true/>
+	<key>PlaygroundLoggingMode</key>
+	<string>Off</string>
 </dict>
 </plist>
