@@ -4,6 +4,8 @@ import MapKit
 import PlaygroundSupport
 #endif
 
+/*public var tilesNumbersNeededForiPad97Inches = [(x: Int, y: Int, z: Int)]()*/
+
 /// Converts an emoji character to an image,
 /// in order to use it as a map pin
 ///
@@ -92,6 +94,7 @@ class OfflineTileOverlay: MKTileOverlay {
         
         /* Get cached tile path */
         let filePath = OfflineTileOverlay.cacheFolder.appendingPathComponent(String(format: "tile-%d-%d-%d.jpg", path.z, path.x, path.y))
+        /*tilesNumbersNeededForiPad97Inches.append((x: path.x, y: path.y, z: path.z))*/
         
         if FileManager.default.fileExists(atPath: filePath.path) {
             
