@@ -26,6 +26,7 @@ public class Person: SKSpriteNode {
         body.affectedByGravity = false
         body.linearDamping = 0   // friction
         body.restitution   = 1   // don't lose velocity when colliding
+        body.contactTestBitMask = 1  // contacts handled
         
         let randomDest = Int(arc4random_uniform(50))
         let signX: CGFloat =  randomDest & 1       == 0 ? -1 : 1
@@ -35,7 +36,6 @@ public class Person: SKSpriteNode {
         let velocityY = CGFloat(arc4random_uniform(50))
         body.velocity = CGVector(dx: signX * velocityX,
                                  dy: signY * velocityY)
-        body.contactTestBitMask = 1  // contacts handled
         
         self.physicsBody = body
         
@@ -52,6 +52,9 @@ public class WWDCScene: SKScene {
     
     /// Number of persons walking
     public var participants = 42
+    
+    /// Persons displayed on the screen
+    var persons = [Person]()
     
     /// 1st line of text
     public var textLine1 = "Rejoice for"
@@ -111,6 +114,7 @@ public class WWDCScene: SKScene {
             let person = Person()
             person.position = CGPoint(x: posX, y: posY)
             addChild(person)
+            persons.append(person)
         }
     }
     
@@ -131,6 +135,74 @@ public class WWDCScene: SKScene {
             titleL2.position.y -= fontSize
         }
     }
+    
+    /// Called when the user begins to touch the view
+    ///
+    /// - Parameters:
+    ///   - touches: Touches in the Began phase
+    ///   - event: Event to which touches belong
+    public override func touchesBegan(_ touches: Set<UITouch>,
+                                      with event: UIEvent?) {
+        
+        guard let touch = touches.first else {
+            return
+        }
+        
+        let touchPoint = touch.location(in: self)
+        attractPersons(to: touchPoint)
+    }
+    
+    /// Called when the user moves their finger on the view
+    ///
+    /// - Parameters:
+    ///   - touches: Touches in the Moved phase
+    ///   - event: Event to which touches belong
+    public override func touchesMoved(_ touches: Set<UITouch>,
+                                      with event: UIEvent?) {
+        
+        guard let touch = touches.first else {
+            return
+        }
+        
+        let touchPoint = touch.location(in: self)
+        attractPersons(to: touchPoint)
+    }
+    
+    /// Called when the user moves their finger on the view
+    ///
+    /// - Parameters:
+    ///   - touches: Touches in the Ended phase
+    ///   - event: Event to which touches belong
+    public override func touchesEnded(_ touches: Set<UITouch>,
+                                      with event: UIEvent?) {
+        
+        for person in persons {
+            
+            let randomDest = Int(arc4random_uniform(50))
+            let signX: CGFloat =  randomDest & 1       == 0 ? -1 : 1
+            let signY: CGFloat = (randomDest & 2) >> 1 == 0 ? -1 : 1
+            
+            let velocityX = CGFloat(randomDest) // Initial speed of the person
+            let velocityY = CGFloat(arc4random_uniform(50))
+            person.physicsBody?.velocity = CGVector(dx: signX * velocityX,
+                                                    dy: signY * velocityY)
+            reorient(person)
+        }
+    }
+    
+    /// Move all persons nodes to a specific point
+    ///
+    /// - Parameter point: Destination of all the persons
+    func attractPersons(to point: CGPoint) {
+        
+        for person in persons {
+            
+            person.physicsBody?.velocity = CGVector(dx: point.x - person.position.x,
+                                                    dy: point.y - person.position.y)
+            reorient(person)
+        }
+    }
+    
 }
 
 // MARK: - Contact handling for the scene
