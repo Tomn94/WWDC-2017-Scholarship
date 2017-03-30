@@ -87,6 +87,8 @@ public class WWDCScene: SKScene {
     public override func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
         
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        
         if let titleL1 = titleL1,
            let titleL2 = titleL2 {
             titleL1.position = self.view?.center ?? .zero
