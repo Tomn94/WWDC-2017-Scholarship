@@ -1,3 +1,7 @@
+/*:
+ - callout(This was my Swift Playgrounds Book): Thanks for coding/playing!
+ */
+
 //#-hidden-code
 import SpriteKit
 import PlaygroundSupport
