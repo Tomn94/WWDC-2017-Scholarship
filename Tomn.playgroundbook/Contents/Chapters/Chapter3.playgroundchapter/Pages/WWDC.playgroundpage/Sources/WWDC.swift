@@ -40,8 +40,11 @@ public class WWDCScene: SKScene {
     
     public var participants = 42
     
-    let titleL1 = SKLabelNode(text: "Rejoice for")
-    let titleL2 = SKLabelNode(text: "WWDC17!")
+    public var textLine1 = "Rejoice for"
+    public var textLine2 = "WWDC17!"
+    
+    var titleL1: SKLabelNode?
+    var titleL2: SKLabelNode?
     
     let fontSize: CGFloat = 60
     
@@ -53,20 +56,24 @@ public class WWDCScene: SKScene {
         backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1)
         scaleMode = .resizeFill
         
-        titleL1.position  = self.view?.center ?? .zero
-        titleL2.position  = titleL1.position
-        titleL2.position.y -= fontSize
-        titleL1.fontName  = UIFont.boldSystemFont(ofSize: 22).fontName
-        titleL2.fontName  = titleL1.fontName
-        titleL1.fontSize  = fontSize
-        titleL2.fontSize  = fontSize
-        titleL1.fontColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.2352941176, alpha: 1)
-        titleL2.fontColor = titleL1.fontColor
-        addChild(titleL1)
-        addChild(titleL2)
-        
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
+        
+        titleL1 = SKLabelNode(text: textLine1)
+        titleL2 = SKLabelNode(text: textLine2)
+        titleL1?.position  = self.view?.center ?? .zero
+        titleL2?.position  = titleL1?.position ?? .zero
+        titleL2?.position.y -= fontSize
+        titleL1?.fontName  = UIFont.boldSystemFont(ofSize: 22).fontName
+        titleL2?.fontName  = titleL1?.fontName
+        titleL1?.fontSize  = fontSize
+        titleL2?.fontSize  = fontSize
+        titleL1?.fontColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.2352941176, alpha: 1)
+        titleL2?.fontColor = titleL1?.fontColor
+//        titleL1?.zPosition = 10
+//        titleL2?.zPosition = titleL1?.zPosition ?? 10
+        addChild(titleL1!)
+        addChild(titleL2!)
         
         for _ in 0..<participants {
             let posX = Int(arc4random_uniform(UInt32(size.width)))
@@ -80,9 +87,12 @@ public class WWDCScene: SKScene {
     public override func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
         
-        titleL1.position = self.view?.center ?? .zero
-        titleL2.position = titleL1.position
-        titleL2.position.y -= fontSize
+        if let titleL1 = titleL1,
+           let titleL2 = titleL2 {
+            titleL1.position = self.view?.center ?? .zero
+            titleL2.position = titleL1.position
+            titleL2.position.y -= fontSize
+        }
     }
 }
 
@@ -117,7 +127,7 @@ extension WWDCScene: SKPhysicsContactDelegate {
             
             if let personIndex = nodeNames.index(where: { $0 == "person" }) {
                 
-                if nodeNames.contains(where: { $0 == "scene" }) {
+                if nodeNames.contains(where: { $0 == "scene" })/* || nodeNames.contains(where: { $0 == "text" })*/ {
                     
                     let person = personIndex > 0 ? bodyB : bodyA
                     reorient(person)
