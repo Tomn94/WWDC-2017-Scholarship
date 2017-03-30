@@ -18,7 +18,7 @@ public class Person: SKSpriteNode {
         body.allowsRotation = false
         body.affectedByGravity = false
         body.linearDamping = 0   // friction
-        body.restitution = 1     // don't lose velocity when colliding
+        body.restitution   = 1   // don't lose velocity when colliding
         let randomDest = Int(arc4random_uniform(50))
         let signX: CGFloat = randomDest & 1 == 0 ? -1 : 1
         let signY: CGFloat = (randomDest & 2) >> 1 == 0 ? -1 : 1
@@ -40,7 +40,10 @@ public class WWDCScene: SKScene {
     
     public var participants = 42
     
-    let title = SKLabelNode(text: "Rejoice for WWDC17!")
+    let titleL1 = SKLabelNode(text: "Rejoice for")
+    let titleL2 = SKLabelNode(text: "WWDC17!")
+    
+    let fontSize: CGFloat = 60
     
     var contactQueue = Array<SKPhysicsContact>()
     
@@ -50,10 +53,17 @@ public class WWDCScene: SKScene {
         backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1)
         scaleMode = .resizeFill
         
-        title.position = self.view?.center ?? .zero
-        title.fontName = UIFont.boldSystemFont(ofSize: 22).fontName
-        title.fontColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.2352941176, alpha: 1)
-        addChild(title)
+        titleL1.position  = self.view?.center ?? .zero
+        titleL2.position  = titleL1.position
+        titleL2.position.y -= fontSize
+        titleL1.fontName  = UIFont.boldSystemFont(ofSize: 22).fontName
+        titleL2.fontName  = titleL1.fontName
+        titleL1.fontSize  = fontSize
+        titleL2.fontSize  = fontSize
+        titleL1.fontColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.2352941176, alpha: 1)
+        titleL2.fontColor = titleL1.fontColor
+        addChild(titleL1)
+        addChild(titleL2)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
@@ -70,7 +80,9 @@ public class WWDCScene: SKScene {
     public override func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
         
-        title.position = self.view?.center ?? .zero
+        titleL1.position = self.view?.center ?? .zero
+        titleL2.position = titleL1.position
+        titleL2.position.y -= fontSize
     }
 }
 
