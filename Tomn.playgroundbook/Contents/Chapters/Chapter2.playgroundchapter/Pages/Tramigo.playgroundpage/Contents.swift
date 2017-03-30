@@ -83,3 +83,18 @@ UIView.animate(withDuration: 1.5, delay: 0.75, options: [], animations: {
     description.alpha = 1
     description.frame.origin.y += 10
 })
+
+//: ### Thomas & Friends
+/// Animated train
+let train = UILabel()
+train.text = "🚂🚃🚃🚃🚃"
+train.font = UIFont.systemFont(ofSize: 35)
+train.center = CGPoint(x: view.bounds.width, y: view.bounds.height - 35)
+train.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin]
+train.sizeToFit()
+view.addSubview(train)
+
+/* Repeated animation of the train, from right to left bottom of the screen */
+UIView.animate(withDuration: 12, delay: 3, options: [.curveLinear, .repeat], animations: {
+    train.center.x = -view.frame.width * 3
+})
