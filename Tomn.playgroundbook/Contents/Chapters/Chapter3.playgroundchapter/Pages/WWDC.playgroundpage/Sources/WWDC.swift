@@ -28,19 +28,33 @@ public class Person: SKSpriteNode {
         body.restitution   = 1   // don't lose velocity when colliding
         body.contactTestBitMask = 1  // contacts handled
         
+        body.velocity = Person.findRandomVelocity()
+        
+        self.physicsBody = body
+        
+        // Walk orientation
+        zRotation = atan2(body.velocity.dy, body.velocity.dx)
+    }
+    
+    class func findRandomVelocity() -> CGVector {
+        
         let randomDest = Int(arc4random_uniform(50))
         let signX: CGFloat =  randomDest & 1       == 0 ? -1 : 1
         let signY: CGFloat = (randomDest & 2) >> 1 == 0 ? -1 : 1
         
         let velocityX = CGFloat(randomDest) // Initial speed of the person
         let velocityY = CGFloat(arc4random_uniform(50))
-        body.velocity = CGVector(dx: signX * velocityX,
-                                 dy: signY * velocityY)
+        return CGVector(dx: signX * velocityX,
+                        dy: signY * velocityY)
+    }
+    
+    /// Rotates the glyph representing so the Person looks forward when walking
+    func reorient() {
         
-        self.physicsBody = body
+        let velocity = physicsBody?.velocity ?? .zero
+        let angle = atan2(velocity.dy, velocity.dx)
         
-        // Walk orientation
-        zRotation = atan2(body.velocity.dy, body.velocity.dx)
+        run(.rotate(toAngle: angle, duration: 0.42))
     }
     
 }
@@ -178,15 +192,8 @@ public class WWDCScene: SKScene {
         
         for person in persons {
             
-            let randomDest = Int(arc4random_uniform(50))
-            let signX: CGFloat =  randomDest & 1       == 0 ? -1 : 1
-            let signY: CGFloat = (randomDest & 2) >> 1 == 0 ? -1 : 1
-            
-            let velocityX = CGFloat(randomDest) // Initial speed of the person
-            let velocityY = CGFloat(arc4random_uniform(50))
-            person.physicsBody?.velocity = CGVector(dx: signX * velocityX,
-                                                    dy: signY * velocityY)
-            reorient(person)
+            person.physicsBody?.velocity = Person.findRandomVelocity()
+            person.reorient()
         }
     }
     
@@ -199,7 +206,7 @@ public class WWDCScene: SKScene {
             
             person.physicsBody?.velocity = CGVector(dx: point.x - person.position.x,
                                                     dy: point.y - person.position.y)
-            reorient(person)
+            person.reorient()
         }
     }
     
@@ -260,29 +267,19 @@ extension WWDCScene: SKPhysicsContactDelegate {
                 if nodeNames.contains(where: { $0 == "scene" })/* || nodeNames.contains(where: { $0 == "text" })*/ {
                     
                     /* Rotate the person to follow the new path */
-                    let person = personIndex > 0 ? bodyB : bodyA
-                    reorient(person)
+                    if let person = (personIndex > 0 ? bodyB : bodyA) as? Person {
+                        person.reorient()
+                    }
                     
                 } else {
                     /* If the person hit another */
-                    for person in nodes {
+                    for person in nodes where person is Person {
                         /* Rotate each person to follow their new path */
-                        reorient(person)
+                        (person as! Person).reorient()
                     }
                 }
             }
         }
-    }
-    
-    /// Rotates the glyph representing a person so they look forward when walking
-    ///
-    /// - Parameter person: Person node to orient
-    func reorient(_ person: SKNode) {
-        
-        let velocity = person.physicsBody?.velocity ?? .zero
-        let angle = atan2(velocity.dy, velocity.dx)
-        
-        person.run(.rotate(toAngle: angle, duration: 0.42))
     }
     
 }
