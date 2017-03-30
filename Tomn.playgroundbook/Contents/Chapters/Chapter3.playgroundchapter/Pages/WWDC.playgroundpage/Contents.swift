@@ -1,5 +1,9 @@
 /*:
- - callout(This was my Swift Playgrounds Book): Thanks for coding/playing!
+ - callout(Fin! This was my Swift Playgrounds Book): Thanks for coding/playing!
+ */
+/*:
+ - note: Everything in this book is home-made ☺️ (March 2017)\
+         Except glyphs on this page, inspired from [Apple’s WWDC17 poster](https://developer.apple.com/wwdc/)
  */
 
 //#-hidden-code
