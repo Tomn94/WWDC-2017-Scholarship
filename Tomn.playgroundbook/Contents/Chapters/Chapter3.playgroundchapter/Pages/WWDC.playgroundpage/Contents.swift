@@ -20,6 +20,9 @@ scene.participants = /*#-editable-code Change how many people participate in WWD
 // Change background text lines
 scene.textLine1 = /*#-editable-code Write some text for the 1st line*/"I can't wait"/*#-end-editable-code*/
 scene.textLine2 = /*#-editable-code Write some text for the 2nd line*/"for WWDC17!"/*#-end-editable-code*/
+
+// Change the font size of the text lines
+scene.fontSize = /*#-editable-code Change the font size of the text lines*/60/*#-end-editable-code*/
 //#-hidden-code
 
 mainView.presentScene(scene)

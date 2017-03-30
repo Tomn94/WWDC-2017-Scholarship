@@ -64,7 +64,7 @@ public class WWDCScene: SKScene {
     var titleL2: SKLabelNode?
     
     /// Font size of the background text
-    let fontSize: CGFloat = 60
+    public var fontSize: CGFloat = 60
     
     /// Stores on-going contacts among nodes
     var contactQueue = Array<SKPhysicsContact>()
