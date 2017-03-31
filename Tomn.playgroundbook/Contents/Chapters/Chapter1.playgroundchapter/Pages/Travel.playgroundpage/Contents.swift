@@ -46,7 +46,7 @@ PlaygroundPage.current.liveView = map
 //: ### Unzoom on Europe
 Timer.scheduledTimer(withTimeInterval: animationDelay, repeats: false) { _ in
     map.setRegion(MKCoordinateRegionMake(CLLocationCoordinate2D(latitude: 43, longitude: 7.5),
-                                         MKCoordinateSpan(latitudeDelta: 32, longitudeDelta: 32)), animated: true)
+                                         MKCoordinateSpan(latitudeDelta: 30, longitudeDelta: 30)), animated: true)
 }
 //: ### Begin to move plane in Middle Asia, avoids it to take a route on the other side of the globe
 Timer.scheduledTimer(withTimeInterval: animationDelay + 1.2, repeats: false) { _ in
