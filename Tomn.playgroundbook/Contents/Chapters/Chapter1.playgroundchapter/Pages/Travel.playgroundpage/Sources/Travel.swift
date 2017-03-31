@@ -13,7 +13,7 @@ import PlaygroundSupport
 /// - Returns: Image containing the string on a clear background
 public func image(from emoji: String, size pinSize: CGFloat) -> UIImage? {
     
-    let size = CGSize(width: pinSize, height: pinSize)
+    let size = CGSize(width: pinSize, height: pinSize + 5)
     UIGraphicsBeginImageContextWithOptions(size, false, 0)
     let rect = CGRect(origin: CGPoint.zero, size: size)
     (emoji as NSString).draw(in: rect, withAttributes: [NSFontAttributeName: UIFont.systemFont(ofSize: pinSize)])
