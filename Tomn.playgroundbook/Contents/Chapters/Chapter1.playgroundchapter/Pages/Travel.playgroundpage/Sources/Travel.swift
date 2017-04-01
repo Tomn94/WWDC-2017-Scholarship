@@ -53,7 +53,7 @@ class OfflineTileOverlay: MKTileOverlay {
     
     /// API to get the files from.
     /// Should containt `%d` respectively for z, x, y
-    static let tileAPIURL = "https://cdn1.apple-mapkit.com/tp/tile?type=tile&size=1&lang=en&imageFormat=jpg&vendorkey=38da783db1ef0c2d9f8e783a063ffcdc6a6330fe&z=%d&x=%d&y=%d"
+    static let tileAPIURL = ""
     
     /// Cache path
 #if os(iOS)
@@ -107,7 +107,7 @@ class OfflineTileOverlay: MKTileOverlay {
                 print("Error while loading tile at path:" + filePath.path)
             }
             
-        } else {
+        }/* else {
             
             /* If not cached, get tile URL back */
             let request = URLRequest(url: url(forTilePath: path))
@@ -134,7 +134,7 @@ class OfflineTileOverlay: MKTileOverlay {
                 result(data, error)
             })
             dataTask.resume()
-        }
+        }*/
     }
     
 }
@@ -222,7 +222,7 @@ public class MapDelegate: NSObject, MKMapViewDelegate {
         /* Create the map overlay, replacing MapKit original one */
         self.tileOverlay = OfflineTileOverlay()
         self.tileOverlay?.cacheTiles = self.cacheTiles
-        self.tileOverlay?.canReplaceMapContent = true
+        self.tileOverlay?.canReplaceMapContent = false
         map.insert(self.tileOverlay!, at: MKOverlayLevel.aboveLabels.rawValue)
     }
     
