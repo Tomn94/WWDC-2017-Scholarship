@@ -8,9 +8,9 @@
 
 ## Preview
 
-[▶️ Click to play the video](Playgrounds.mp4)
+[▶️ Click to play the video](https://youtu.be/w5SfOVPmK_U)
 
-[![Click to play the video](Playgrounds-preview.png)](Playgrounds.mp4)
+[![Click to play the video](Playgrounds-preview.png)](https://youtu.be/w5SfOVPmK_U)
 
 
 ## Description
@@ -26,8 +26,8 @@
 >   - *First Steps* — (with Apple technologies) tilt the device for a tvOS-parallax style
 >   - *Tramigo* — my 1<sup>st</sup> iOS app
 >   - *Students’ Union* — tap the icon to see the features
->   - *Space game · Students’ Union* — tilt & tap to fly the ship
->   - *Fruity game · Students’ Union* — slash the fruits!
+>   - *Space game · Students’ Union* — tilt & tap to fly the ship
+>   - *Fruity game · Students’ Union* — slash the fruits!
 >   - *DigiSheep* — shows how the app scans tickets
 >   - *Subtle Subtitles* — simulation of my subtitles player
 > - Looking forward
