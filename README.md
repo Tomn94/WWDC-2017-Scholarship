@@ -1,6 +1,6 @@
 # WWDC’17 Scholarship Submission
 
-![Version](https://img.shields.io/badge/version-1.0-green.svg)
+![Status](https://img.shields.io/badge/status-accepted-green.svg)
 [![Code](https://img.shields.io/badge/code-Swift%203.1-orange.svg)](https://developer.apple.com/swift/)
 [![Platform](https://img.shields.io/badge/platform-iOS%20%c2%b7%20Xcode-red.svg)](http://www.apple.com/ios/)
 [![Contributors](https://img.shields.io/badge/contributors-Thomas%20NAUDET-blue.svg)](http://twitter.com/tomn94)
